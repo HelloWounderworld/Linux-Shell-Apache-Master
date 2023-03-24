@@ -23,3 +23,4 @@ Seguir o link para download
 ## Aula 08 - Conhecendo o Linux/Ubuntu:
 
 ## Aula 09 - Slides do Curso:
+Slides do curso para poder pesquisar os comandos utilizados ou rever também alguns conteúdos das aulas práticas que eu fiz em slide para me guiar na apresentação.
