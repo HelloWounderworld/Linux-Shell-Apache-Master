@@ -3,7 +3,7 @@ Esse repositório está destinado para o meu aprendizado sobre Linux Shell e con
 
 Para o estudo seguirei as seguintes referências
 
-- Linux para Desenvolvedores (c/ terminal, Shell, Apache e +) - Udemy
+- Aprenda tudo sobre o Linux! Completo e atualizado v2023! - Udemy
 
 - Linux® Command Line and Shell Scripting Bible, Richard Blum and Christine Bresnahan
 
