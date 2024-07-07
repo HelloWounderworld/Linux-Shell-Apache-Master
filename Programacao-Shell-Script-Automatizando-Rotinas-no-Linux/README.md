@@ -1,0 +1,1 @@
+# Aprenda nesse curso prático, como usar o shell script para criar soluções de automação das tarefas do dia a dia no Linux
