@@ -1,0 +1,1 @@
+# Secao 32: Autenticacao local no Linux
