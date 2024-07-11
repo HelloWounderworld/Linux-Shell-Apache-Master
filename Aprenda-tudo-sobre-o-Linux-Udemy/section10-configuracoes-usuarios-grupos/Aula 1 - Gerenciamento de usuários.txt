@@ -1,0 +1,101 @@
+// Aula 4 - Gerenciamento de usuários
+
+# id vitor
+
+# su
+
+# sudo
+
+# whoami
+
+# id
+
+# su
+
+# visudo 
+
+# usermod -G wheel vitor
+
+# id vitor
+
+# passwd vitor
+
+# sudo useradd lori
+
+# tail -n 10 /etc/shadow
+
+# tail -n 10 /etc/passwd
+
+# cat /etc/default/useradd
+
+# less /etc/login.defs
+
+# chage -l vitor
+
+# passwd -n 30 -w 3 -x 90 vitor
+
+# chage -l vitor
+
+■ /etc/profile: 
+
+■ /etc/bashrc: 
+
+■ ~ /.profile:
+
+■ ~ /.bashrc: 
+
+# vim /etc/login.defs
+
+# cd /etc/skel
+
+# mkdir Imagens
+
+# mkdir Documentos
+
+export EDITOR=/usr/bin/vim
+
+# useradd teste
+
+# id teste
+
+# passwd teste
+
+# passwd -n 30 -w 3 -x 90 teste
+
+# chage -l teste
+
+# for i in teste lori bob; do useradd $i; done
+
+# grep lori /etc/passwd /etc/shadow /etc/group
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

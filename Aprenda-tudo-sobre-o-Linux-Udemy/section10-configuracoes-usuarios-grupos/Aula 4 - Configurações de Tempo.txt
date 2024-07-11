@@ -1,0 +1,73 @@
+// Aula 8 - Configurações de Tempo
+
+Diversos serviços oferecidos por servidores Linux depende da configuração correta do tempo no servidor. 
+
+Pense em serviços como sincronização de banco de dados, autenticações, etc.
+
+Temos alguns comandos mais usados nessa configurações:
+
+# date  - mostra hora local
+
+# hwclock  - mostra a hora de hardware
+
+# timedatectl  - Desenvolvido para gerenciar todos os aspectos do tempo no RHEL
+
+Vamos ver alguns comandos de date:
+
+# date - mostra a data e hora atual
+
+# date +%d-%m-%y - configura 
+
+Com hwclock 
+
+# hwclock -c - mostra a diferença entre a hora do hardware e a hora do sistema.
+
+A saída deste comando é atualizada a cada 10 segundos.
+
+# hwclock --systohc - sincroniza a hora atual do sistema com o clock do hardware
+
+# hwclock --hctosys - sincroniza a hora atual do hardware com o relógio do sistema
+
+# timedatectl list-timezones - Mostra todas as zonas disponíveis para uso
+
+# timedatectl set-timezone America/Sao_Paulo - Configura um zona horária para o seu servidor
+
+# timedatectl 
+
+Uma alternativa, podemos usar o tzselect
+
+# tzselect
+
+Para configurar os servidores de NTP:
+
+# vim /etc/chrony.conf
+
+Depois de alterar, podemos mudar de servidores:
+
+# timedatectl set-ntp 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

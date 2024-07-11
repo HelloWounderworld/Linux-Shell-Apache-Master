@@ -1,0 +1,44 @@
+// Aula 5 - Gerenciamento de grupos
+
+Depois de criar os usuários, agora é hora de configuramos os nossos grupos:
+
+Vamos visualizar eles:
+
+# less /etc/group
+
+Nele, temos os nomes, ID, senha, e os seus membros.
+
+Agora, vamos criar dois grupos e adiciona alguns usuários como membros aos grupos:
+
+# groupadd vendas
+
+# groupadd contas
+
+Agora, vamos adicionar membros neles:
+
+# usermod -aG vendas teste
+# usermod -aG vendas vitor
+# usermod -aG contas lori
+# usermod -aG contas bob
+
+Vamos ver como ficou o seu ID:
+
+# id vitor
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

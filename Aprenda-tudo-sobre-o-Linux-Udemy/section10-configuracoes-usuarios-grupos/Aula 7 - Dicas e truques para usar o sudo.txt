@@ -1,0 +1,40 @@
+// Aula 7 - Dicas e truques avançados para usar o sudo
+
+sudo -k
+
+# vim /etc/sudoers
+
+Defaults timestamp_timeout = 0
+
+$ sudo systemctl restart sshd
+
+sudo -l
+
+mz2 ALL=(ALL) /usr/bin/systemctl
+
+mz2 ALL=(ALL) /usr/bin/systemctl * sshd
+
+mz2 ALL=(ALL) /usr/bin/systemctl status sshd, /usr/bin/systemctl restart sshd
+
+$ sudo vim /etc/sudoers
+
+$ sudo systemctl restart sshd
+
+$ sudo systemctl status sshd
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

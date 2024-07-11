@@ -1,0 +1,34 @@
+// Aula 6 - Administrando as permissões com sudo
+
+# vim /etc/sudoers
+
+$ groups
+
+# %wheel ALL=(ALL) NOPASSWD: ALL
+
+# %wheel ALL=(ALL) NOPASSWD: ALL
+
+sudo usermod -a -G wheel mz2   - CentOS/Fedora
+
+sudo usermod -a -G sudo mz2    - Ubuntu/Debian
+
+sudo useradd -G wheel vitor
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

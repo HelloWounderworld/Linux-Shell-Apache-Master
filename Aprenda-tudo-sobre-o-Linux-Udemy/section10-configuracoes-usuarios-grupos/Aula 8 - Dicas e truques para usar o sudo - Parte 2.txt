@@ -1,0 +1,60 @@
+// Aula 8 - Dicas e truques para usar o sudo - Parte 2
+
+vitor ALL=(ALL) /usr/bin/systemctl status sshd, /usr/bin/systemctl restart sshd
+
+#! /bin/bash
+
+echo "Este script pertence a esse usuário, grato!"
+
+$ chmod +x script.sh
+
+$ sudo /home/vitor/script.sh
+[sudo] password for vitor: 
+Sorry, user vitor is not allowed to execute 'script.sh' as root on ubuntu.
+
+vitor  ALL=(ALL) /home/vitor/script.sh 
+
+$ sudo /home/vitor/script.sh
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

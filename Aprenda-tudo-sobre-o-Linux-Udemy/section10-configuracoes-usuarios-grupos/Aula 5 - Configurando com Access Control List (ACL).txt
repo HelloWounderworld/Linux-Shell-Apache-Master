@@ -1,0 +1,40 @@
+// Aula 5 - Configurando com Access Control List (ACL)
+
+setfacl -m u:username:rwx filename
+
+# dnf -y install acl  - (RHEL/CenOS)
+
+$ sudo apt install acl - (Debian/Ubuntu)
+
+$ touch /tmp/memo.txt
+$ ls -l /tmp/memo.txt
+$ setfacl -m u:vitor:rw /tmp/memo.txt
+$ setfacl -m g:users:rw /tmp/memo.txt
+
+$ ls -l /tmp/memo.txt
+
+$ getfacl -p /tmp/memo.txt
+
+$ chmod 644 /tmp/memo.txt
+$ getfacl -p /tmp/memo.txt
+
+$ mkdir /tmp/mz2
+$ setfacl -m d:g:vitor:rwx /tmp/mz2/
+$ getfacl -p /tmp/mz2/
+
+$ mkdir /tmp/mz2/test
+$ getfacl -p /tmp/mz2/test
+
+$ touch /tmp/mz2/file.txt
+$ getfacl -p /tmp/mz2/file.txt
+
+
+
+
+
+
+
+
+
+
+
