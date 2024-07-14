@@ -377,33 +377,748 @@ Resumo do comando:
 
 Este exemplo mostra como criar um novo usuário com um diretório home como um subvolume Btrfs, aproveitando as funcionalidades avançadas do sistema de arquivos Btrfs.
 
-[2]:
+[2]:https://github.com/HelloWounderworld/Linux-Shell-Apache-Master/tree/main/Aprenda-tudo-sobre-o-Linux-Udemy/section06-Gerenciando-contas-usuarios/btrfs
 
 ### useradd -c ou useradd --comment
+O comando "useradd -c" ou "useradd --comment" é usado para adicionar um comentário ou descrição ao campo GECOS (General Electric Comprehensive Operating System) de uma nova conta de usuário. Esse campo geralmente contém informações como o nome completo do usuário, número de telefone, etc.
+
+Sintaxe, considerando que vc esteja como root
+
+    useradd -c "comentário" username
+
+ou
+
+    useradd --comment "comentário" username
+
+#### Exemplo de uso
+Vamos criar um usuário chamado jdoe com um comentário que descreve o nome completo do usuário.
+
+    useradd -c "John Doe" jdoe
+
+#### Verificando o Comentário
+Para verificar se o comentário foi adicionado corretamente, você pode usar o comando getent para listar as informações do usuário.
+
+    getent passwd jdoe
+
+A saída será algo como:
+
+    jdoe:x:1001:1001:John Doe:/home/jdoe:/bin/bash
+
+Aqui, John Doe é o comentário que foi adicionado ao campo GECOS.
+
+Explicação dos Campos:
+
+A linha de saída do comando getent passwd jdoe contém os seguintes campos, separados por dois-pontos (:):
+
+1. Nome de usuário: jdoe
+
+2. Senha: x (indica que a senha está armazenada no arquivo /etc/shadow)
+
+3. UID: 1001 (User ID)
+
+4. GID: 1001 (Group ID)
+
+5. GECOS: John Doe (Comentário)
+
+6. Diretório home: /home/jdoe
+
+7. Shell de login: /bin/bash
+
+O comando useradd -c ou useradd --comment é útil para adicionar informações descritivas sobre o usuário, facilitando a identificação e o gerenciamento de contas no sistema.
 
 ### useradd -d ou useradd --home-dir
+O comando "useradd -d" ou "useradd --home-dir" é usado para especificar um diretório home diferente do padrão ao criar uma nova conta de usuário. Por padrão, o diretório home de um novo usuário é criado em /home/username, mas com essa opção, você pode definir um caminho diferente.
+
+Sintaxe, considerando que vc seja o root
+
+    useradd -d /caminho/para/diretorio username
+
+ou
+
+    useradd --home-dir /caminho/para/diretorio username
+
+#### Exemplo de Uso
+Vamos criar um usuário chamado jdoe e definir seu diretório home para /custom/home/jdoe.
+
+1. Crie o diretório customizado (se ainda não existir):
+
+        mkdir -p /custom/home/jdoe
+
+2. Crie o usuário com o diretório home especificado:
+
+        useradd -d /custom/home/jdoe -m jdoe
+
+    A opção -m ou --create-home é usada para criar o diretório home se ele não existir.
+
+#### Verificando o Diretório Home
+Para verificar se o diretório home foi configurado corretamente, você pode usar o comando getent:
+
+    getent passwd jdoe
+
+A saída será algo como:
+
+    jdoe:x:1001:1001::/custom/home/jdoe:/bin/bash
+
+Aqui, /custom/home/jdoe é o diretório home que foi especificado.
+
+Explicação dos Campos:
+
+1. Nome de usuário: jdoe
+
+2. Senha: x (indica que a senha está armazenada no arquivo /etc/shadow)
+
+3. UID: 1001 (User ID)
+
+4. GID: 1001 (Group ID)
+
+5. GECOS: (Comentário, vazio neste exemplo)
+
+6. Diretório home: /custom/home/jdoe
+
+7. Shell de login: /bin/bash
+
+O comando useradd -d ou useradd --home-dir é útil quando você precisa criar um usuário com um diretório home em um local diferente do padrão. Isso pode ser necessário por razões de organização, segurança ou requisitos específicos de aplicação.
 
 ### useradd -e ou useradd --expiredate
+O comando "useradd -e" ou "useradd --expiredate" é usado para definir uma data de expiração para uma nova conta de usuário. Após essa data, o usuário não poderá mais fazer login no sistema. Isso é útil em situações onde você precisa criar contas temporárias ou limitar o acesso de um usuário a um período específico.
+
+Sintaxe, considerando que vc seja o root
+
+    useradd -e YYYY-MM-DD username
+
+ou
+
+    useradd --expiredate YYYY-MM-DD username
+
+- YYYY-MM-DD: A data de expiração no formato ano-mês-dia.
+
+- username: O nome do usuário que está sendo criado.
+
+#### Exemplo de Uso
+Vamos criar um usuário chamado jdoe cuja conta expira em 31 de dezembro de 2024.
+
+    sudo useradd -e 2024-12-31 jdoe
+
+#### Verificando a Data de Expiração
+Para verificar se a data de expiração foi configurada corretamente, você pode usar o comando chage:
+
+    chage -l jdoe
+
+A saída incluirá uma linha como:
+
+    Account expires    : Dec 31, 2024
+
+##### Explicação dos Campos:
+
+A linha de saída do comando chage -l jdoe contém várias informações sobre a conta do usuário, incluindo a data de expiração.
+
+##### Alterando a Data de Expiração de um Usuário Existente
+Se você precisar alterar a data de expiração de um usuário existente, pode usar o comando usermod:
+
+    usermod -e 2025-01-31 jdoe
+
+##### Verificando a Data de Expiração no Arquivo /etc/shadow
+A data de expiração também é armazenada no arquivo /etc/shadow. Você pode verificar isso com o comando grep:
+
+    grep '^jdoe:' /etc/shadow
+
+A saída será algo como:
+
+    jdoe:$6$randomhash$...:19000:0:99999:7::19358:
+
+O último campo (19358 neste exemplo) representa a data de expiração em dias desde 1 de janeiro de 1970 (época Unix). Você pode converter esse número para uma data legível usando um comando como date:
+
+    date -d '1970-01-01 +19358 days'
+
+O comando useradd -e ou useradd --expiredate é útil para criar contas de usuário com uma data de expiração específica, permitindo um controle mais granular sobre o acesso ao sistema. Isso é especialmente útil em ambientes onde o acesso temporário é necessário.
 
 ### useradd -f ou useradd --inactive
+O comando useradd -f ou useradd --inactive é usado para definir o número de dias após a expiração da senha de um usuário antes que a conta seja desativada. Isso é útil para garantir que os usuários atualizem suas senhas em tempo hábil e para desativar contas que não foram atualizadas.
+
+Sintaxe, considerando que vc seja o root
+
+    useradd -f INACTIVE_DAYS username
+
+ou
+
+    useradd --inactive INACTIVE_DAYS username
+
+- INACTIVE_DAYS: O número de dias após a expiração da senha antes que a conta seja desativada. Um valor de 0 desativa a conta imediatamente após a expiração da senha. Um valor de -1 desativa essa funcionalidade.
+
+- username: O nome do usuário que está sendo criado.
+
+#### Exemplo de Uso
+Vamos criar um usuário chamado jdoe e definir que sua conta será desativada 7 dias após a expiração da senha.
+
+    sudo useradd -f 7 jdoe
+
+Agora, como experimento, vamos determinar a data de expiracao dessa senha
+
+    sudo chage -W 8 jdoe
+
+Assim, sera determinado a data de expiracao.
+
+Definimos a senha para o jdoe
+
+    sudo passwd jdoe
+
+Colocamos uma senha simples: 12345
+
+#### Verificando a Configuração de Inatividade
+Para verificar se a configuração de inatividade foi aplicada corretamente, você pode usar o comando chage:
+
+    sudo chage -l jdoe
+
+A saída incluirá uma linha como:
+
+    Password inactive : 7 days after expiration
+
+#### Explicação dos Campos
+A linha de saída do comando chage -l jdoe contém várias informações sobre a conta do usuário, incluindo o período de inatividade após a expiração da senha.
+
+##### Alterando o Período de Inatividade de um Usuário Existente
+Se você precisar alterar o período de inatividade de um usuário existente, pode usar o comando usermod:
+
+    sudo usermod -f 10 jdoe
+
+#### Verificando a Configuração de Inatividade no Arquivo /etc/shadow
+A configuração de inatividade também é armazenada no arquivo /etc/shadow. Você pode verificar isso com o comando grep:
+
+    sudo grep '^jdoe:' /etc/shadow
+
+A saída será algo como:
+
+    jdoe:$6$randomhash$...:19000:0:99999:7:10::
+
+O penúltimo campo (10 neste exemplo) representa o número de dias de inatividade após a expiração da senha.
+
+O comando useradd -f ou useradd --inactive é útil para garantir que as contas de usuário sejam desativadas após um período de inatividade, incentivando os usuários a atualizar suas senhas regularmente. Isso é especialmente importante em ambientes onde a segurança é uma preocupação crítica.
 
 ### useradd -g ou useradd --gid
+O comando "useradd -g" ou "useradd --gid" é usado para especificar o grupo primário de um novo usuário durante a criação da conta. O grupo primário é o grupo ao qual o usuário pertence por padrão e é usado para definir permissões de arquivos e diretórios.
+
+Sintaxe, considerando que vc seja root
+
+    useradd -g groupname username
+
+ou
+
+    useradd --gid groupname username
+
+- groupname: O nome ou ID do grupo primário que você deseja atribuir ao usuário.
+
+- username: O nome do usuário que está sendo criado.
+
+#### Exemplo de Uso
+Vamos criar um grupo chamado developers e, em seguida, criar um usuário chamado jdoe que pertence a esse grupo como seu grupo primário.
+
+##### Passo 1: Criar o Grupo
+Primeiro, crie o grupo developers (se ainda não existir):
+
+    sudo groupadd developers
+
+##### Passo 2: Criar o Usuário com o Grupo Primário Especificado
+Agora, crie o usuário jdoe e atribua o grupo developers como seu grupo primário:
+
+    sudo useradd -g developers jdoe
+
+#### Verificando a Configuração
+Para verificar se o usuário jdoe foi criado corretamente e pertence ao grupo developers, você pode usar o comando id:
+
+    id jdoe
+
+A saída será algo como:
+
+    uid=1001(jdoe) gid=1002(developers) groups=1002(developers)
+
+Aqui, gid=1002(developers) indica que o grupo primário do usuário jdoe é developers.
+
+##### Explicação dos Campos
+A linha de saída do comando id jdoe contém os seguintes campos:
+
+- uid=1001(jdoe): O ID do usuário e o nome do usuário.
+
+- gid=1002(developers): O ID do grupo primário e o nome do grupo primário.
+
+- groups=1002(developers): A lista de grupos aos quais o usuário pertence (neste caso, apenas o grupo primário).
+
+O comando useradd -g ou useradd --gid é útil para especificar o grupo primário de um novo usuário durante a criação da conta. Isso é importante para definir as permissões de arquivos e diretórios de forma adequada.
 
 ### useradd -G ou useradd --groups
+O comando "useradd -G" ou "useradd --groups" é usado para adicionar um novo usuário a um ou mais grupos suplementares durante a criação da conta. Grupos suplementares são grupos adicionais aos quais o usuário pertence, além do grupo primário. Isso é útil para conceder permissões adicionais ao usuário em diferentes contextos.
+
+Sintaxe, considerando que vc seja um root
+
+    useradd -G group1,group2,... username
+
+ou
+
+    useradd --groups group1,group2,... username
+
+- group1,group2,...: Uma lista de grupos suplementares separados por vírgulas.
+
+- username: O nome do usuário que está sendo criado.
+
+#### Exemplo de Uso
+Vamos criar dois grupos chamados developers e admins, e em seguida, criar um usuário chamado jdoe que pertence ao grupo primário developers e aos grupos suplementares admins e users.
+
+##### Passo 1: Criar os Grupos
+Primeiro, crie os grupos developers, admins e users (se ainda não existirem):
+
+    sudo groupadd developers
+    sudo groupadd admins
+    sudo groupadd users
+
+##### Passo 2: Criar o Usuário com Grupos Suplementares Especificados
+Agora, crie o usuário jdoe e atribua o grupo primário developers e os grupos suplementares admins e users:
+
+    sudo useradd -g developers -G admins,users jdoe
+
+#### Verificando a Configuração
+Para verificar se o usuário jdoe foi criado corretamente e pertence aos grupos especificados, você pode usar o comando id:
+
+    id jdoe
+
+A saída será algo como:
+
+    uid=1001(jdoe) gid=1002(developers) groups=1002(developers),1003(admins),1004(users)
+
+Aqui, gid=1002(developers) indica que o grupo primário do usuário jdoe é developers, e groups=1002(developers),1003(admins),1004(users) indica que o usuário também pertence aos grupos admins e users.
+
+##### Explicação dos Campos
+A linha de saída do comando id jdoe contém os seguintes campos:
+
+- uid=1001(jdoe): O ID do usuário e o nome do usuário.
+
+- gid=1002(developers): O ID do grupo primário e o nome do grupo primário.
+
+- groups=1002(developers),1003(admins),1004(users): A lista de grupos aos quais o usuário pertence, incluindo o grupo primário e os grupos suplementares.
+
+O comando useradd -G ou useradd --groups é útil para adicionar um novo usuário a múltiplos grupos durante a criação da conta. Isso permite conceder permissões adicionais ao usuário em diferentes contextos, facilitando a gestão de acesso e permissões no sistema.
 
 ### useradd -k ou useradd --skel
+O comando "useradd -k" ou "useradd --skel" é usado para especificar um diretório alternativo de esqueleto (skeleton directory) ao criar uma nova conta de usuário. O diretório de esqueleto contém arquivos e diretórios padrão que são copiados para o diretório home do novo usuário. Por padrão, o diretório de esqueleto é /etc/skel.
+
+Sintaxe, considerando que vc seja o root
+
+    useradd -k /caminho/para/skel_dir username
+
+ou
+
+    useradd --skel /caminho/para/skel_dir username
+
+- /caminho/para/skel_dir: O caminho para o diretório de esqueleto alternativo.
+
+- username: O nome do usuário que está sendo criado.
+
+#### Exemplo de Uso
+Vamos criar um diretório de esqueleto alternativo chamado /custom/skel e, em seguida, criar um usuário chamado jdoe que usará esse diretório de esqueleto.
+
+##### Passo 1: Criar o Diretório de Esqueleto Alternativo
+Primeiro, crie o diretório de esqueleto alternativo e adicione alguns arquivos padrão:
+
+    sudo mkdir -p /custom/skel
+    echo "Bem-vindo ao seu novo diretório home!" | sudo tee /custom/skel/welcome.txt
+
+##### Passo 2: Criar o Usuário com o Diretório de Esqueleto Especificado
+Agora, crie o usuário jdoe e especifique o diretório de esqueleto alternativo:
+
+    sudo useradd -k /custom/skel -m jdoe
+
+- A opção -m ou --create-home é usada para criar o diretório home do usuário.
+
+#### Verificando a Configuração
+Para verificar se o diretório home do usuário jdoe foi criado corretamente com os arquivos do diretório de esqueleto alternativo, você pode listar o conteúdo do diretório home do usuário:
+
+    ls -la /home/jdoe
+
+Você deve ver o arquivo welcome.txt copiado do diretório de esqueleto alternativo:
+
+    total 12
+    drwxr-xr-x 2 jdoe jdoe 4096 Jul 12 12:34 .
+    drwxr-xr-x 3 root root 4096 Jul 12 12:34 ..
+    -rw-r--r-- 1 jdoe jdoe   32 Jul 12 12:34 welcome.txt
+
+##### Explicação dos Campos
+A linha de saída do comando ls -la /home/jdoe contém os seguintes campos:
+
+- drwxr-xr-x: As permissões do diretório.
+
+- 2 jdoe jdoe: O número de links e o proprietário e grupo do diretório.
+
+- 4096 Jul 12 12:34: O tamanho do diretório e a data e hora de criação.
+
+- .: O diretório atual.
+
+- ..: O diretório pai.
+
+- -rw-r--r--: As permissões do arquivo welcome.txt.
+
+- 1 jdoe jdoe: O número de links e o proprietário e grupo do arquivo.
+
+- 32 Jul 12 12:34: O tamanho do arquivo e a data e hora de criação.
+
+- welcome.txt: O nome do arquivo.
+
+O comando useradd -k ou useradd --skel é útil para especificar um diretório de esqueleto alternativo ao criar uma nova conta de usuário. Isso permite personalizar os arquivos e diretórios padrão que são copiados para o diretório home do novo usuário.
 
 ### useradd -l ou useradd --no-log-init
+O comando useradd -l ou useradd --no-log-init é usado para criar um novo usuário sem adicionar entradas nos arquivos de log do sistema, como lastlog e faillog. Esses arquivos são usados para registrar informações sobre os últimos logins e tentativas de login falhadas dos usuários. Em algumas situações, pode ser desejável criar um usuário sem registrar essas informações, por exemplo, para contas de serviço ou scripts automatizados.
+
+Sintaxe, considerando que vc seja root
+
+    useradd -l username
+
+ou
+
+    useradd --no-log-init username
+
+#### Exemplo de Uso
+Para verificar se o usuário foi criado corretamente, você pode usar o comando getent passwd:
+
+    getent passwd serviceuser
+
+A saída será algo como:
+
+    serviceuser:x:1001:1001::/home/serviceuser:/bin/bash
+
+#### Verificando os Arquivos de Log
+Para confirmar que o usuário não foi adicionado aos arquivos de log lastlog e faillog, você pode usar os seguintes comandos:
+
+##### Verificando lastlog
+
+    sudo lastlog -u serviceuser
+
+Se o usuário não tiver uma entrada no lastlog, a saída será algo como:
+
+    Username         Port     From             Latest
+    serviceuser **Never logged in**
+
+##### Verificando faillog
+
+    sudo faillog -u serviceuser
+
+Se o usuário não tiver uma entrada no faillog, a saída será algo como:
+
+    Username   Failures Maximum Latest                   On
+    serviceuser     0        0    **Never logged in**
+
+##### Explicação dos Campos
+A linha de saída dos comandos lastlog e faillog contém informações sobre os últimos logins e tentativas de login falhadas dos usuários. No caso do usuário serviceuser, as entradas indicam que ele nunca fez login, o que é esperado, pois não há registros nos arquivos de log.
+
+O comando useradd -l ou useradd --no-log-init é útil para criar usuários sem adicionar entradas nos arquivos de log do sistema, como lastlog e faillog. Isso pode ser desejável para contas de serviço ou scripts automatizados onde o registro de logins não é necessário.
 
 ### useradd -m ou useradd --create-home
+O comando "useradd -m" ou "useradd --create-home" é usado para criar um novo usuário e, ao mesmo tempo, criar automaticamente o diretório home para esse usuário. O diretório home é o local onde os arquivos pessoais do usuário serão armazenados, e ele é criado com permissões apropriadas e arquivos padrão copiados do diretório de esqueleto (geralmente /etc/skel).
+
+Sintaxe, considerando que vc seja root
+
+    useradd -m username
+
+ou
+
+    useradd --create-home username
+
+#### Exemplo de Uso
+Vamos criar um usuário chamado jdoe e criar automaticamente o diretório home para ele.
+
+    sudo useradd -m jdoe
+
+#### Verificando a Configuração
+Para verificar se o usuário foi criado corretamente e se o diretório home foi criado, você pode usar os seguintes comandos:
+
+##### Verificando o Usuário
+
+    getent passwd jdoe
+
+A saída será algo como:
+
+    jdoe:x:1001:1001::/home/jdoe:/bin/bash
+
+Aqui, /home/jdoe é o diretório home que foi criado.
+
+#### Verificando o Diretório Home
+Para verificar se o diretório home foi criado e contém os arquivos padrão, você pode listar o conteúdo do diretório home do usuário:
+
+    ls -la /home/jdoe
+
+A saída será algo como:
+
+    total 12
+    drwxr-xr-x 2 jdoe jdoe 4096 Jul 12 12:34 .
+    drwxr-xr-x 3 root root 4096 Jul 12 12:34 ..
+    -rw-r--r-- 1 jdoe jdoe   32 Jul 12 12:34 .bashrc
+    -rw-r--r-- 1 jdoe jdoe   32 Jul 12 12:34 .profile
+    -rw-r--r-- 1 jdoe jdoe   32 Jul 12 12:34 .bash_logout
+
+##### Explicação dos Campos
+A linha de saída do comando ls -la /home/jdoe contém os seguintes campos:
+
+- drwxr-xr-x: As permissões do diretório
+
+- 2 jdoe jdoe: O número de links e o proprietário e grupo do diretório.
+
+- 4096 Jul 12 12:34: O tamanho do diretório e a data e hora de criação.
+
+- .: O diretório atual.
+
+- ..: O diretório pai.
+
+- -rw-r--r--: As permissões dos arquivos padrão.
+
+- 1 jdoe jdoe: O número de links e o proprietário e grupo dos arquivos.
+
+- 32 Jul 12 12:34: O tamanho dos arquivos e a data e hora de criação.
+
+- .bashrc, .profile, .bash_logout: Os nomes dos arquivos padrão copiados do diretório de esqueleto.
+
+O comando useradd -m ou useradd --create-home é útil para criar um novo usuário e garantir que um diretório home seja criado automaticamente com os arquivos padrão. Isso facilita a configuração inicial do ambiente do usuário e garante que ele tenha um local adequado para armazenar seus arquivos pessoais.
 
 ### useradd -M ou useradd --no-create-home
+O comando "useradd -M" ou "useradd --no-create-home" é usado para criar um novo usuário sem criar automaticamente um diretório home para ele. Isso pode ser útil em situações onde o usuário não precisa de um diretório home, como contas de serviço ou usuários que não armazenarão arquivos pessoais no sistema.
+
+Sintaxe, considerando que vc seja root
+
+    useradd -M username
+
+ou
+
+    useradd --no-create-home username
+
+#### Exemplo de Uso
+Vamos criar um usuário chamado serviceuser sem criar um diretório home para ele.
+
+    sudo useradd -M serviceuser
+
+#### Verificando a Configuração
+Para verificar se o usuário foi criado corretamente e se o diretório home não foi criado, você pode usar os seguintes comandos:
+
+##### Verificando o Usuário
+
+    getent passwd serviceuser
+
+A saída será algo como:
+
+    serviceuser:x:1001:1001::/home/serviceuser:/bin/bash
+
+Aqui, /home/serviceuser é o diretório home padrão que seria usado, mas não foi criado.
+
+#### Verificando a Ausência do Diretório Home
+Para verificar se o diretório home não foi criado, você pode listar o conteúdo do diretório /home:
+
+    ls -la /home
+
+Você não deve ver um diretório chamado serviceuser na saída.
+
+##### Explicação dos Campos
+A linha de saída do comando getent passwd serviceuser contém os seguintes campos:
+
+- serviceuser: O nome do usuário.
+
+- x: Indica que a senha está armazenada no arquivo /etc/shadow.
+
+- 1001: O UID (User ID) do usuário.
+
+- 1001: O GID (Group ID) do usuário.
+
+- ::: Campos de GECOS (General Electric Comprehensive Operating System) e diretório home, que estão vazios ou padrão.
+
+- /home/serviceuser: O diretório home padrão que seria usado, mas não foi criado.
+
+- /bin/bash: O shell de login do usuário.
+
+O comando useradd -M ou useradd --no-create-home é útil para criar usuários que não precisam de um diretório home, como contas de serviço ou usuários que não armazenarão arquivos pessoais no sistema. Isso pode ajudar a manter o sistema mais organizado e seguro, evitando a criação de diretórios home desnecessários.
 
 ### useradd -N ou useradd --no-user-group
+O comando "useradd -N" ou "useradd --no-user-group" é usado para criar um novo usuário sem criar um grupo com o mesmo nome do usuário. Por padrão, ao criar um novo usuário, o sistema também cria um grupo com o mesmo nome do usuário e o adiciona a esse grupo como seu grupo primário. Com a opção -N ou --no-user-group, você pode evitar a criação desse grupo e, em vez disso, adicionar o usuário a um grupo existente.
+
+Sintaxe, considerando que vc seja root
+
+    useradd -N username
+
+ou
+
+    useradd --no-user-group username
+
+#### Exemplo de Uso
+Vamos criar um grupo chamado sharedgroup e, em seguida, criar um usuário chamado jdoe que será adicionado a esse grupo como seu grupo primário, sem criar um grupo com o nome jdoe.
+
+##### Passo 1: Criar o Grupo
+Primeiro, crie o grupo sharedgroup (se ainda não existir):
+
+    sudo groupadd sharedgroup
+
+##### Passo 2: Criar o Usuário sem Criar um Grupo com o Mesmo Nome
+Agora, crie o usuário jdoe e adicione-o ao grupo sharedgroup como seu grupo primário:
+
+    sudo useradd -N -g sharedgroup jdoe
+
+#### Verificando a Configuração
+Para verificar se o usuário jdoe foi criado corretamente e pertence ao grupo sharedgroup, você pode usar o comando id:
+
+    id jdoe
+
+A saída será algo como:
+
+    uid=1001(jdoe) gid=1002(sharedgroup) groups=1002(sharedgroup)
+
+Aqui, gid=1002(sharedgroup) indica que o grupo primário do usuário jdoe é sharedgroup.
+
+##### Explicação dos Campos
+A linha de saída do comando id jdoe contém os seguintes campos:
+
+- uid=1001(jdoe): O ID do usuário e o nome do usuário.
+
+- gid=1002(sharedgroup): O ID do grupo primário e o nome do grupo primário.
+
+- groups=1002(sharedgroup): A lista de grupos aos quais o usuário pertence (neste caso, apenas o grupo primário).
+
+O comando useradd -N ou useradd --no-user-group é útil para criar um novo usuário sem criar um grupo com o mesmo nome do usuário. Isso é especialmente útil em ambientes onde você deseja que vários usuários compartilhem o mesmo grupo primário ou quando você deseja evitar a criação de muitos grupos individuais.
 
 ### useradd -o ou useradd --non-unique
+O comando "useradd -o" ou "useradd --non-unique" é usado para permitir a criação de um novo usuário com um UID (User ID) duplicado, ou seja, um UID que já está em uso por outro usuário no sistema. Por padrão, cada usuário deve ter um UID único, mas em algumas situações específicas, pode ser necessário que dois ou mais usuários compartilhem o mesmo UID.
+
+Sintaxe, considerando que vc seja root
+
+    useradd -o -u UID username
+
+ou
+
+    useradd --non-unique --uid UID username
+
+- -o ou --non-unique: Permite a criação de um usuário com um UID duplicado.
+
+- -u UID ou --uid UID: Especifica o UID que será atribuído ao novo usuário.
+
+- username: O nome do usuário que está sendo criado.
+
+#### Exemplo de Uso
+Vamos criar um usuário chamado jdoe2 com o mesmo UID que o usuário jdoe.
+
+##### Passo 1: Verificar o UID do Usuário Existente
+Primeiro, verifique o UID do usuário jdoe:
+
+    id jdoe
+
+A saída será algo como:
+
+    uid=1001(jdoe) gid=1001(jdoe) groups=1001(jdoe)
+
+Aqui, o UID do usuário jdoe é 1001.
+
+##### Passo 2: Criar o Novo Usuário com o UID Duplicado
+Agora, crie o usuário jdoe2 com o mesmo UID 1001:
+
+    sudo useradd -o -u 1001 jdoe2
+
+#### Verificando a Configuração
+Para verificar se o usuário jdoe2 foi criado corretamente com o UID duplicado, você pode usar o comando id:
+
+    id jdoe2
+
+A saída será algo como:
+
+    uid=1001(jdoe2) gid=1002(jdoe2) groups=1002(jdoe2)
+
+Aqui, uid=1001(jdoe2) indica que o usuário jdoe2 foi criado com o mesmo UID que jdoe.
+
+##### Explicação dos Campos
+A linha de saída do comando id jdoe2 contém os seguintes campos:
+
+- uid=1001(jdoe2): O ID do usuário e o nome do usuário.
+
+- gid=1002(jdoe2): O ID do grupo primário e o nome do grupo primário.
+
+- groups=1002(jdoe2): A lista de grupos aos quais o usuário pertence (neste caso, apenas o grupo primário).
+
+#### Considerações de Segurança
+Usar UIDs duplicados pode ter implicações de segurança e gerenciamento, pois os dois usuários compartilharão permissões de arquivos e diretórios. Isso deve ser feito com cuidado e apenas em situações específicas onde é realmente necessário.
+
+O comando useradd -o ou useradd --non-unique é útil para criar um novo usuário com um UID duplicado, permitindo que dois ou mais usuários compartilhem o mesmo UID. Isso pode ser necessário em situações específicas, mas deve ser usado com cautela devido às implicações de segurança e gerenciamento.
 
 ### useradd -p ou useradd --password
+O comando useradd -p ou useradd --password é usado para definir a senha de um novo usuário durante a criação da conta. A senha deve ser fornecida em formato criptografado (hash). Isso é útil para automatizar a criação de usuários com senhas predefinidas.
+
+Sintaxe, considerando que vc seja root
+
+    useradd -p encrypted_password username
+
+ou
+
+    useradd --password encrypted_password username
+
+- encrypted_password: A senha criptografada (hash) que será atribuída ao novo usuário.
+
+- username: O nome do usuário que está sendo criado.
+
+#### Gerando a Senha Criptografada
+Antes de usar o comando useradd -p, você precisa gerar a senha criptografada. Isso pode ser feito usando o comando openssl passwd ou mkpasswd.
+
+##### Usando openssl passwd
+
+    openssl passwd -6
+
+- -6: Especifica o uso do algoritmo SHA-512 para criptografia.
+
+Digite a senha desejada quando solicitado, e o comando retornará a senha criptografada.
+
+##### Usando mkpasswd (do pacote whois)
+
+    sudo apt-get install whois
+    mkpasswd --method=sha-512   
+
+Digite a senha desejada quando solicitado, e o comando retornará a senha criptografada.
+
+#### Exemplo de Uso
+Vamos criar um usuário chamado jdoe com a senha password123 (criptografada).
+
+##### Passo 1: Gerar a Senha Criptografada
+Usando openssl passwd:
+
+    openssl passwd -6
+
+Digite password123 quando solicitado. A saída será algo como:
+
+    $6$randomsalt$randomhash
+
+##### Passo 2: Criar o Usuário com a Senha Criptografada
+Use a senha criptografada gerada no passo anterior:
+
+    sudo useradd -p '$6$randomsalt$randomhash' jdoe
+
+#### Verificando a Configuração
+Para verificar se o usuário foi criado corretamente e se a senha foi configurada, você pode usar o comando getent passwd:
+
+    getent passwd jdoe
+
+A saída será algo como:
+
+    jdoe:x:1001:1001::/home/jdoe:/bin/bash
+
+Para verificar a senha, você pode tentar fazer login como o usuário jdoe ou usar o comando su:
+
+    su - jdoe
+
+Digite password123 quando solicitado.
+
+##### Explicação dos Campos
+A linha de saída do comando getent passwd jdoe contém os seguintes campos:
+
+- jdoe: O nome do usuário.
+
+- x: Indica que a senha está armazenada no arquivo /etc/shadow.
+
+- 1001: O UID (User ID) do usuário.
+
+- 1001: O GID (Group ID) do usuário.
+
+- ::: Campos de GECOS (General Electric Comprehensive Operating System) e diretório home, que estão vazios ou padrão.
+
+- /home/jdoe: O diretório home do usuário.
+
+- /bin/bash: O shell de login do usuário.
+
+O comando useradd -p ou useradd --password é útil para definir a senha de um novo usuário durante a criação da conta, especialmente em scripts de automação. A senha deve ser fornecida em formato criptografado.
 
 ### useradd -r ou useradd --system
 
@@ -420,6 +1135,13 @@ Este exemplo mostra como criar um novo usuário com um diretório home como um s
 ### useradd -Z ou useradd --selinux-user
 
 ### useradd --extrausers
+
+### Adicionei um usuario novo e quando logo nele nao consigo abrir o FireFox:
+Para resolver esse problema vamos ter que ler o seguinte artigo
+
+    https://askubuntu.com/questions/1513839/not-able-to-launch-firefox-on-a-new-user-account
+
+    https://askubuntu.com/questions/1399383/how-to-install-firefox-as-a-traditional-deb-package-without-snap-in-ubuntu-22/1404401#1404401
 
 ## Alterando usuários
 O "usermod" serve para modificar algum usuario ja existente.

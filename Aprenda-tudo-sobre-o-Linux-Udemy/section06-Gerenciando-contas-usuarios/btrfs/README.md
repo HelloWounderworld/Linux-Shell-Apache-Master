@@ -51,4 +51,10 @@
 ## Conclusão
 O Btrfs é um sistema de arquivos poderoso e flexível, ideal para ambientes onde a integridade dos dados, a flexibilidade na gestão de volumes e a eficiência são cruciais. No entanto, sua complexidade pode ser um desafio para usuários menos experientes.
 
-Se precisar de mais detalhes ou tiver alguma dúvida específica sobre o Btrfs, sinta-se à vontade para perguntar!
+Seguir link de leitura:
+
+    https://en.wikipedia.org/wiki/Btrfs
+
+    https://www.easeus.com/resource/btrfs-vs-ext4.html#5
+
+    https://tuxcare.com/blog/btrfs-file-system-an-overview/#:~:text=As%20a%20single%2Ddisk%20filesystem,features%2C%20the%20ground%20gets%20shakier.
