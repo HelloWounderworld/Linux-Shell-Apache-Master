@@ -276,6 +276,13 @@ isso ira exibir o seguinte
 No caso, no uid estara indicando o id que vc definiu como o grupo padrao que foi definido quando vc colocou o comando acima.
 
 #### Opcao: -s
+A opcao "-s" muda o padrao de login shell.
+
+No caso, ao digitarmos
+
+    useradd -D -s /bin/zsh
+
+define o shell padrao para novos usuarios como /bin/zsh. Isso significa que, quando um novo usuario for criado, seu shell padrao sera o zsh.
 
 ### useradd --badnames
 
