@@ -276,7 +276,7 @@ isso ira exibir o seguinte
 No caso, no uid estara indicando o id que vc definiu como o grupo padrao que foi definido quando vc colocou o comando acima.
 
 #### Opcao: -s
-A opcao "-s" muda o padrao de login shell.
+A opcao "-s" muda o padrao de login shell ([1]).
 
 No caso, ao digitarmos
 
@@ -284,11 +284,100 @@ No caso, ao digitarmos
 
 define o shell padrao para novos usuarios como /bin/zsh. Isso significa que, quando um novo usuario for criado, seu shell padrao sera o zsh.
 
+[1]: https://github.com/HelloWounderworld/Linux-Shell-Apache-Master/tree/main/Aprenda-tudo-sobre-o-Linux-Udemy/section06-Gerenciando-contas-usuarios/default-login-shell
+
 ### useradd --badnames
+O comando useradd --badnames permite a criação de usuários com nomes que normalmente seriam considerados inválidos ou "ruins" pelo sistema. Isso pode incluir nomes com caracteres especiais, espaços, ou outros formatos que não seguem as convenções padrão de nomes de usuários.
+
+Bom, a sintaxe do comando, visto que vc esta como root, seria
+
+    useradd --badnames <nome_do_usuario>
+
+Vamos criar um usuário com um nome que normalmente seria rejeitado, como "user!@#".
+
+    useradd --badnames "user!@#"
+
+Para verificar se o usuario foi criado com sucesso, voce pode listar os usuarios no sistema
+
+    cat /etc/passwd | grep "user!@#"
+
+Se o usuário foi criado corretamente, você verá uma linha correspondente no arquivo /etc/passwd.
+
+Obs: Usar nomes de usuários com caracteres especiais pode causar problemas com scripts e programas que não esperam esses tipos de nomes. Portanto, use essa opção com cautela e apenas quando necessário.
 
 ### useradd -b ou useradd --base-dir
+O comando "useradd -b" ou "useradd --base-dir" é usado para especificar o diretório base onde os diretórios home dos novos usuários serão criados. Este comando é útil quando você deseja que os diretórios home dos usuários sejam criados em um local diferente do padrão /home.
+
+A sintaxe seria, visto que vc esta como root
+
+    useradd -b <base_dir> <username>
+
+ou
+
+    useradd --base-dir <base_dir> <username>
+
+- <base_dir>: O diretório base onde o diretório home do novo usuário será criado.
+
+- <username>: O nome do novo usuário.
+
+Vamos criar um novo usuário chamado testeuser e definir o diretório base para /home_teste.
+
+1. Primeiro, crie o diretório /home_teste, estando no diretorio raiz, "/"
+
+        mkdir /home_teste
+
+2. Em seguida, use o comando useradd com a opção -b para criar o usuário testeuser com o diretório home em /home_teste:
+
+        useradd -b /home_teste -m testeuser
+
+3. Verifique se o diretório home foi criado corretamente:
+
+        ls /home_teste
+
+    Você deve ver um diretório chamado testeuser dentro de /home_teste.
+
+Resumo do comando:
+
+    mkdir /home_teste
+    useradd -b /home_teste -m testeuser
+    ls /home_teste
+
+Este exemplo mostra como criar um novo usuário com um diretório home em um local diferente do padrão.
 
 ### useradd --btrfs-subvolume-home
+O comando useradd --btrfs-subvolume-home é usado para criar o diretório home de um novo usuário como um subvolume Btrfs. Btrfs (B-tree file system) ([2]) é um sistema de arquivos moderno que oferece várias funcionalidades avançadas, como snapshots, subvolumes, e verificação de integridade.
+
+A sua sintaxe seria
+
+    useradd --btrfs-subvolume-home <username>
+
+Quando você usa a opção --btrfs-subvolume-home, o diretório home do novo usuário será criado como um subvolume Btrfs, o que pode ser útil para gerenciamento de snapshots e outras funcionalidades específicas do Btrfs.
+
+Vamos criar um novo usuário chamado btrfsuser e definir seu diretório home como um subvolume Btrfs.
+
+1. Certifique-se de que o sistema de arquivos onde o diretório home será criado é Btrfs. Você pode verificar isso com o comando df -T:
+
+        df -T /home
+
+2. Crie o usuário btrfsuser com o diretório home como um subvolume Btrfs:
+
+        useradd --btrfs-subvolume-home -m btrfsuser
+
+3. Verifique se o diretório home foi criado corretamente e se é um subvolume Btrfs:
+
+        btrfs subvolume list /home
+
+    Você deve ver uma entrada para o subvolume correspondente ao diretório home do usuário btrfsuser.
+
+Resumo do comando:
+
+    df -T /home
+    useradd --btrfs-subvolume-home -m btrfsuser
+    btrfs subvolume list /home
+
+Este exemplo mostra como criar um novo usuário com um diretório home como um subvolume Btrfs, aproveitando as funcionalidades avançadas do sistema de arquivos Btrfs.
+
+[2]:
 
 ### useradd -c ou useradd --comment
 
