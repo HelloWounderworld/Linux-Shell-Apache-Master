@@ -1190,6 +1190,8 @@ O comando useradd -r ou useradd --system é essencial para criar contas de usuá
 ### useradd -R ou useradd --root (ESTE CONTEUDO FICOU UM POUCO RUIM, TEREI QUE MELHORAR)
 O comando "useradd -R" ou "useradd --root" é usado para criar um novo usuário em um ambiente chroot (change root). O chroot é uma operação que muda o diretório raiz aparente para o processo atual e seus filhos. Isso é útil para criar usuários em um sistema de arquivos diferente do sistema de arquivos raiz atual, como em um ambiente de recuperação ou em um sistema de arquivos montado.
 
+Recomendamos que faca isso usando o chroot ([3]) para melhorar a sua seguranca.
+
 #### Utilidade
 
 - Ambientes de Recuperação: Quando você precisa criar ou modificar usuários em um sistema de arquivos que não é o sistema de arquivos raiz atual, como durante a recuperação de um sistema.
@@ -1260,8 +1262,10 @@ A saída será algo como:
 
 O comando useradd -R ou useradd --root é uma ferramenta poderosa para administrar usuários em sistemas de arquivos diferentes do sistema de arquivos raiz atual, proporcionando flexibilidade e controle em ambientes de recuperação e preparação de sistemas.
 
+[3]: https://github.com/HelloWounderworld/Linux-Shell-Apache-Master/tree/main/Aprenda-tudo-sobre-o-Linux-Udemy/section06-Gerenciando-contas-usuarios/chroot
+
 ### useradd -P ou useradd --prefix
-O comando "useradd -P" ou "useradd --prefix" é usado para especificar um diretório prefixo onde estão localizados os arquivos de configuração do sistema, como /etc/passwd, /etc/shadow, /etc/group, etc. Isso é útil quando você está gerenciando usuários em um sistema de arquivos diferente do sistema de arquivos raiz atual, como em um ambiente chroot ou em um sistema de arquivos montado.
+O comando "useradd -P" ou "useradd --prefix" é usado para especificar um diretório prefixo onde estão localizados os arquivos de configuração do sistema, como /etc/passwd, /etc/shadow, /etc/group, etc. Isso é útil quando você está gerenciando usuários em um sistema de arquivos diferente do sistema de arquivos raiz atual, como em um ambiente chroot ([3]) ou em um sistema de arquivos montado.
 
 #### Utilidade
 
