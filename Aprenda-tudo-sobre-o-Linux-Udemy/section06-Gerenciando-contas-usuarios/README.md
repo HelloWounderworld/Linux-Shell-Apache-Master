@@ -665,9 +665,9 @@ Vamos criar dois grupos chamados developers e admins, e em seguida, criar um usu
 ##### Passo 1: Criar os Grupos
 Primeiro, crie os grupos developers, admins e users (se ainda não existirem):
 
-    sudo groupadd developers
-    sudo groupadd admins
-    sudo groupadd users
+    groupadd developers
+    groupadd admins
+    groupadd users
 
 ##### Passo 2: Criar o Usuário com Grupos Suplementares Especificados
 Agora, crie o usuário jdoe e atribua o grupo primário developers e os grupos suplementares admins e users:
@@ -763,7 +763,7 @@ A linha de saída do comando ls -la /home/jdoe contém os seguintes campos:
 O comando useradd -k ou useradd --skel é útil para especificar um diretório de esqueleto alternativo ao criar uma nova conta de usuário. Isso permite personalizar os arquivos e diretórios padrão que são copiados para o diretório home do novo usuário.
 
 ### useradd -l ou useradd --no-log-init
-O comando useradd -l ou useradd --no-log-init é usado para criar um novo usuário sem adicionar entradas nos arquivos de log do sistema, como lastlog e faillog. Esses arquivos são usados para registrar informações sobre os últimos logins e tentativas de login falhadas dos usuários. Em algumas situações, pode ser desejável criar um usuário sem registrar essas informações, por exemplo, para contas de serviço ou scripts automatizados.
+O comando "useradd -l" ou "useradd --no-log-init" é usado para criar um novo usuário sem adicionar entradas nos arquivos de log do sistema, como lastlog e faillog. Esses arquivos são usados para registrar informações sobre os últimos logins e tentativas de login falhadas dos usuários. Em algumas situações, pode ser desejável criar um usuário sem registrar essas informações, por exemplo, para contas de serviço ou scripts automatizados.
 
 Sintaxe, considerando que vc seja root
 
@@ -792,7 +792,7 @@ Para confirmar que o usuário não foi adicionado aos arquivos de log lastlog e 
 Se o usuário não tiver uma entrada no lastlog, a saída será algo como:
 
     Username         Port     From             Latest
-    serviceuser **Never logged in**
+    serviceuser                               **Never logged in**
 
 ##### Verificando faillog
 
@@ -1036,6 +1036,9 @@ Usar UIDs duplicados pode ter implicações de segurança e gerenciamento, pois 
 
 O comando useradd -o ou useradd --non-unique é útil para criar um novo usuário com um UID duplicado, permitindo que dois ou mais usuários compartilhem o mesmo UID. Isso pode ser necessário em situações específicas, mas deve ser usado com cautela devido às implicações de segurança e gerenciamento.
 
+##### OBS
+Se vc criar um usuario com o mesmo uid do usuario admin que vc esta logado, no momento, vc nao ira conseguir realizar alteracoes ou remocao sobre esse novo usuario, pois sera mostrado uma mensagem sobre processo em execucao. Isso e indicativo de que esse usuario novo que vc acabou de criar tem as mesmas permissoes de acesso do admin. Se vc quiser realizar alguma alteracao sobre esse usuario vc tera que deslogar do admin e logar numa outra conta de usuario para realizar tais alteracoes desejadas.
+
 ### useradd -p ou useradd --password
 O comando useradd -p ou useradd --password é usado para definir a senha de um novo usuário durante a criação da conta. A senha deve ser fornecida em formato criptografado (hash). Isso é útil para automatizar a criação de usuários com senhas predefinidas.
 
@@ -1120,8 +1123,17 @@ A linha de saída do comando getent passwd jdoe contém os seguintes campos:
 
 O comando useradd -p ou useradd --password é útil para definir a senha de um novo usuário durante a criação da conta, especialmente em scripts de automação. A senha deve ser fornecida em formato criptografado.
 
+##### OBS
+O usuario que foi criado por esse processo, pode ser que vc nao consiga remover ele utilizando o userdel. Ou alterar algo dele utilizando o usermod, por aparecer alguma msg que indique que algo esta em processo. Para isso, vc tera que utilizar o seguinte comando
+
+    ps -ef | grep username
+
+Assim, ele ira exibir todos os PID desse usuario, e vc tera que ir matando o processo uma por uma utilizando o comando
+
+    kill -9 [PID]
+
 ### useradd -r ou useradd --system
-O comando useradd -r ou useradd --system é usado para criar uma conta de usuário do sistema. Contas de usuário do sistema são geralmente usadas para serviços e processos do sistema, e não para usuários humanos. Essas contas têm algumas características específicas:
+O comando "useradd -r" ou "useradd --system" é usado para criar uma conta de usuário do sistema. Contas de usuário do sistema são geralmente usadas para serviços e processos do sistema, e não para usuários humanos. Essas contas têm algumas características específicas:
 
 1. UID Baixo: Contas de sistema geralmente têm UIDs (User IDs) baixos, tipicamente abaixo de 1000, dependendo da configuração do sistema. Isso ajuda a diferenciá-las das contas de usuário normais.
 
@@ -1175,7 +1187,7 @@ Aqui, 999 é o UID e GID da conta de sistema, e /usr/sbin/nologin é o shell de 
 
 O comando useradd -r ou useradd --system é essencial para criar contas de usuário específicas para serviços e processos do sistema, garantindo que eles operem com permissões apropriadas e sem a capacidade de login interativo.
 
-### useradd -R ou useradd --root
+### useradd -R ou useradd --root (ESTE CONTEUDO FICOU UM POUCO RUIM, TEREI QUE MELHORAR)
 O comando "useradd -R" ou "useradd --root" é usado para criar um novo usuário em um ambiente chroot (change root). O chroot é uma operação que muda o diretório raiz aparente para o processo atual e seus filhos. Isso é útil para criar usuários em um sistema de arquivos diferente do sistema de arquivos raiz atual, como em um ambiente de recuperação ou em um sistema de arquivos montado.
 
 #### Utilidade
@@ -1190,16 +1202,24 @@ O comando "useradd -R" ou "useradd --root" é usado para criar um novo usuário 
 Vamos criar um novo usuário chamado jdoe em um sistema de arquivos montado em /mnt.
 
 ##### Passo 1: Montar o Sistema de Arquivos
-Primeiro, certifique-se de que o sistema de arquivos está montado em /mnt. Se não estiver, monte-o:
+Primeiro, vamos monstar um arquivo dentro do diretorio /mnt
 
-    sudo mount /dev/sdX1 /mnt
+    mkdir /mnt/isolated
 
-Substitua /dev/sdX1 pelo dispositivo correto.
+certifique-se de que o sistema de arquivos está montado em /mnt. Se não estiver, monte-o:
+
+    mount /dev/sdX1 /mnt/isoalted
+
+ou
+
+    mount --bind /dev/null /mnt/isolated
+
+Substitua /dev/sdX1 pelo dispositivo correto (sda, sdb, nvme0n1, hda, sdc1, etc... Escolha a que for mais conveniente. Precisa ser um dispositivo de bloco e, nao, de caracteres. Eu utilizei o "sda").
 
 ##### Passo 2: Criar o Usuário no Ambiente chroot
 Use o comando useradd com a opção -R para especificar o novo diretório raiz:
 
-    sudo useradd -R /mnt -m jdoe
+    sudo useradd -R /mnt/isolated -m jdoe
 
 - -R /mnt ou --root /mnt: Especifica o novo diretório raiz.
 
