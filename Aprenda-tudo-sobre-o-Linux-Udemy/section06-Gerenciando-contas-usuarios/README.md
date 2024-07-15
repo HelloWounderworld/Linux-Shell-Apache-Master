@@ -1264,7 +1264,7 @@ O comando useradd -R ou useradd --root é uma ferramenta poderosa para administr
 
 [3]: https://github.com/HelloWounderworld/Linux-Shell-Apache-Master/tree/main/Aprenda-tudo-sobre-o-Linux-Udemy/section06-Gerenciando-contas-usuarios/chroot
 
-### useradd -P ou useradd --prefix
+### useradd -P ou useradd --prefix (Parei aqui!)
 O comando "useradd -P" ou "useradd --prefix" é usado para especificar um diretório prefixo onde estão localizados os arquivos de configuração do sistema, como /etc/passwd, /etc/shadow, /etc/group, etc. Isso é útil quando você está gerenciando usuários em um sistema de arquivos diferente do sistema de arquivos raiz atual, como em um ambiente chroot ([3]) ou em um sistema de arquivos montado.
 
 #### Utilidade
