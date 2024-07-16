@@ -1,5 +1,6 @@
 #!/bin/bash
 # display user information from the system.
+# Roda "set" no terminal para ver essas variaveis
 echo "User info for userid: $USER"
 echo "User info for userid: ${USER}"
 echo "UID: $UID"

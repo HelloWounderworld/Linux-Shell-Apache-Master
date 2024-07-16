@@ -953,6 +953,12 @@ Agora, crie o usuário jdoe e adicione-o ao grupo sharedgroup como seu grupo pri
 
     sudo useradd -N -g sharedgroup jdoe
 
+OBS: caso vc utilize somente -N sem adicionar algum grupo especifico, ao darmos
+
+    id jdoe
+
+iremos ver que ele foi adicionado ao grupo user, que tem gid, por padrao, 100.
+
 #### Verificando a Configuração
 Para verificar se o usuário jdoe foi criado corretamente e pertence ao grupo sharedgroup, você pode usar o comando id:
 
@@ -1187,7 +1193,7 @@ Aqui, 999 é o UID e GID da conta de sistema, e /usr/sbin/nologin é o shell de 
 
 O comando useradd -r ou useradd --system é essencial para criar contas de usuário específicas para serviços e processos do sistema, garantindo que eles operem com permissões apropriadas e sem a capacidade de login interativo.
 
-### useradd -R ou useradd --root (ESTE CONTEUDO FICOU UM POUCO RUIM, TEREI QUE MELHORAR)
+### useradd -R ou useradd --root (A ABORDAGEM DESSE CONTEUDO FICOU RUIM!! MELHOREEE!!)
 O comando "useradd -R" ou "useradd --root" é usado para criar um novo usuário em um ambiente chroot (change root). O chroot é uma operação que muda o diretório raiz aparente para o processo atual e seus filhos. Isso é útil para criar usuários em um sistema de arquivos diferente do sistema de arquivos raiz atual, como em um ambiente de recuperação ou em um sistema de arquivos montado.
 
 Recomendamos que faca isso usando o chroot ([3]) para melhorar a sua seguranca.
@@ -1219,6 +1225,8 @@ ou
 Substitua /dev/sdX1 pelo dispositivo correto (sda, sdb, nvme0n1, hda, sdc1, etc... Escolha a que for mais conveniente. Precisa ser um dispositivo de bloco e, nao, de caracteres. Eu utilizei o "sda").
 
 ##### Passo 2: Criar o Usuário no Ambiente chroot
+Antes disso, vamos precisar mudar as permissoes de acesso do arquivo passwd que fica em /mnt/isolated/etc/passwd. Pois, ao longo da criacao desse usuario, ele ira ter que realizar alguma escrita sobre esse arquivo.
+
 Use o comando useradd com a opção -R para especificar o novo diretório raiz:
 
     sudo useradd -R /mnt/isolated -m jdoe
@@ -1264,7 +1272,7 @@ O comando useradd -R ou useradd --root é uma ferramenta poderosa para administr
 
 [3]: https://github.com/HelloWounderworld/Linux-Shell-Apache-Master/tree/main/Aprenda-tudo-sobre-o-Linux-Udemy/section06-Gerenciando-contas-usuarios/chroot
 
-### useradd -P ou useradd --prefix (Parei aqui!)
+### useradd -P ou useradd --prefix (A ABORDAGEM DESSE CONTEUDO FICOU RUIM!! MELHOREEE!!)
 O comando "useradd -P" ou "useradd --prefix" é usado para especificar um diretório prefixo onde estão localizados os arquivos de configuração do sistema, como /etc/passwd, /etc/shadow, /etc/group, etc. Isso é útil quando você está gerenciando usuários em um sistema de arquivos diferente do sistema de arquivos raiz atual, como em um ambiente chroot ([3]) ou em um sistema de arquivos montado.
 
 #### Utilidade
@@ -1278,17 +1286,21 @@ O comando "useradd -P" ou "useradd --prefix" é usado para especificar um diret�
 #### Exemplo de Uso
 Vamos criar um novo usuário chamado jdoe em um sistema de arquivos montado em /mnt.
 
+Primeiro, vamos criar um arquivo dentro do mnt
+
+    mkdir -p /mnt/isolated
+
 ##### Passo 1: Montar o Sistema de Arquivos
 Primeiro, certifique-se de que o sistema de arquivos está montado em /mnt. Se não estiver, monte-o:
 
-    sudo mount /dev/sdX1 /mnt
+    sudo mount /dev/sdX1 /mnt/isolated
 
 Substitua /dev/sdX1 pelo dispositivo correto.
 
 ##### Passo 2: Criar o Usuário no Sistema de Arquivos Montado
 Use o comando useradd com a opção -P para especificar o diretório prefixo:
 
-    sudo useradd -P /mnt -m jdoe
+    sudo useradd -P /mnt/isolated -m jdoe
 
 - -P /mnt ou --prefix /mnt: Especifica o diretório prefixo onde estão localizados os arquivos de configuração do sistema.
 
@@ -1329,7 +1341,7 @@ A saída será algo como:
 
 O comando useradd -P ou useradd --prefix é uma ferramenta poderosa para administrar usuários em sistemas de arquivos diferentes do sistema de arquivos raiz atual, proporcionando flexibilidade e controle em ambientes de recuperação e preparação de sistemas.
 
-### useradd -s ou useradd --shell
+### useradd -s ou useradd --shell (parei aqui!)
 O comando "useradd -s" ou "useradd --shell" é usado para especificar o shell de login padrão para um novo usuário durante a criação da conta. O shell de login é o programa que é executado quando o usuário faz login no sistema. Por padrão, o shell de login é geralmente /bin/bash, mas você pode especificar um shell diferente, como /bin/zsh, /bin/sh, ou qualquer outro shell disponível no sistema.
 
 #### Utilidade
