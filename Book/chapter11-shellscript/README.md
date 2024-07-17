@@ -14,6 +14,4 @@
 
 ## Performing math
 
-### A fl oating-point solution (I stopped here!)
-
 ## Exiting the script
