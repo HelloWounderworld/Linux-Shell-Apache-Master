@@ -1341,7 +1341,7 @@ A saída será algo como:
 
 O comando useradd -P ou useradd --prefix é uma ferramenta poderosa para administrar usuários em sistemas de arquivos diferentes do sistema de arquivos raiz atual, proporcionando flexibilidade e controle em ambientes de recuperação e preparação de sistemas.
 
-### useradd -s ou useradd --shell (parei aqui!)
+### useradd -s ou useradd --shell
 O comando "useradd -s" ou "useradd --shell" é usado para especificar o shell de login padrão para um novo usuário durante a criação da conta. O shell de login é o programa que é executado quando o usuário faz login no sistema. Por padrão, o shell de login é geralmente /bin/bash, mas você pode especificar um shell diferente, como /bin/zsh, /bin/sh, ou qualquer outro shell disponível no sistema.
 
 #### Utilidade
@@ -1409,7 +1409,7 @@ A saída será algo como:
 
 - Automação: Facilita a criação de usuários com o shell apropriado em scripts de automação, garantindo consistência e reduzindo a necessidade de modificações manuais.
 
-O comando useradd -s ou useradd --shell é uma ferramenta útil para configurar o shell de login de novos usuários, proporcionando flexibilidade e controle sobre o ambiente de login do usuário.
+O comando "useradd -s" ou "useradd --shell" é uma ferramenta útil para configurar o shell de login de novos usuários, proporcionando flexibilidade e controle sobre o ambiente de login do usuário.
 
 ### useradd -u ou useradd --uid
 O comando "useradd -u" ou "useradd --uid" é usado para especificar o UID (User ID) de um novo usuário durante a criação da conta. O UID é um número único atribuído a cada usuário no sistema, que é usado para identificar o usuário e determinar suas permissões e propriedade de arquivos.
@@ -1482,7 +1482,7 @@ A saída será algo como:
 O comando useradd -u ou useradd --uid é uma ferramenta essencial para administradores de sistemas que precisam controlar e gerenciar UIDs de usuários, proporcionando flexibilidade e controle sobre a identificação e permissões de usuários no sistema.
 
 ### useradd -U ou useradd --user-group
-O comando useradd -U ou useradd --user-group é usado para criar um novo usuário e, ao mesmo tempo, criar um grupo com o mesmo nome do usuário. Este grupo será o grupo primário do usuário. Este comportamento é o padrão em muitas distribuições Linux, mas a opção -U ou --user-group garante explicitamente que o grupo será criado.
+O comando "useradd -U" ou "useradd --user-group" é usado para criar um novo usuário e, ao mesmo tempo, criar um grupo com o mesmo nome do usuário. Este grupo será o grupo primário do usuário. Este comportamento é o padrão em muitas distribuições Linux, mas a opção -U ou --user-group garante explicitamente que o grupo será criado.
 
 #### Utilidade
 
@@ -1504,41 +1504,38 @@ Vamos criar um novo usuário chamado jdoe e garantir que um grupo com o mesmo no
 - -m: Cria o diretório home para o novo usuário.
 
 #### Verificando a Configuração
-1. Verificar o Usuário e o Grupo
+##### Passo 1: Verificar o Usuário e o Grupo
+Use o comando getent passwd para verificar se o usuário foi criado corretamente:
 
-    Use o comando getent passwd para verificar se o usuário foi criado corretamente:
+    getent passwd jdoe
 
-         getent passwd jdoe
+A saída será algo como:
 
-    A saída será algo como:
+    jdoe:x:1001:1001::/home/jdoe:/bin/bash
 
-        jdoe:x:1001:1001::/home/jdoe:/bin/bash
+Aqui, 1001 é o UID (User ID) e o GID (Group ID) do usuário jdoe.
 
-    Aqui, 1001 é o UID (User ID) e o GID (Group ID) do usuário jdoe.
+##### Passo 2: Verificar o Grupo
+Use o comando getent group para verificar se o grupo foi criado corretamente:
 
-2. Verificar o Grupo
+    getent group jdoe
 
-    Use o comando getent group para verificar se o grupo foi criado corretamente:
+A saída será algo como:
 
-        getent group jdoe
+    jdoe:x:1001:
 
-    A saída será algo como:
+Aqui, 1001 é o GID do grupo jdoe.
 
-        jdoe:x:1001:
+##### Passo 3: Verificar as Permissões do Diretório Home
+Liste o conteúdo do diretório /home para verificar as permissões do diretório home do usuário:
 
-    Aqui, 1001 é o GID do grupo jdoe.
+    ls -ld /home/jdoe
 
-3. Verificar as Permissões do Diretório Home
+A saída será algo como:
 
-    Liste o conteúdo do diretório /home para verificar as permissões do diretório home do usuário:
+    drwxr-xr-x 2 jdoe jdoe 4096 Jul 12 12:34 /home/jdoe
 
-        ls -ld /home/jdoe
-
-    A saída será algo como:
-
-        drwxr-xr-x 2 jdoe jdoe 4096 Jul 12 12:34 /home/jdoe
-
-    Aqui, jdoe jdoe indica que o diretório é de propriedade do usuário jdoe e do grupo jdoe.
+Aqui, jdoe jdoe indica que o diretório é de propriedade do usuário jdoe e do grupo jdoe.
 
 ##### Explicação dos Campos
 
@@ -1560,7 +1557,7 @@ Vamos criar um novo usuário chamado jdoe e garantir que um grupo com o mesmo no
 
 O comando useradd -U ou useradd --user-group é uma ferramenta útil para criar usuários com grupos primários correspondentes, proporcionando flexibilidade e controle sobre a organização e segurança do sistema.
 
-### useradd -Z ou useradd --selinux-user
+### useradd -Z ou useradd --selinux-user (Parei aqui!)
 O comando useradd -Z ou useradd --selinux-user é usado para especificar um mapeamento de usuário SELinux (Security-Enhanced Linux) para um novo usuário durante a criação da conta. SELinux é um módulo de segurança do Linux que fornece um mecanismo para suportar políticas de segurança obrigatórias. Ele usa contextos de segurança para controlar o acesso a arquivos, processos e outros recursos do sistema.
 
 #### Utilidade
