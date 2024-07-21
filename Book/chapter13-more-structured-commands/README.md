@@ -17,5 +17,3 @@ The bash shell also allows you to use standard command redirection and piping to
 
 ## Finally
 The next chapter discusses how to interact with your shell script user. Often, shell scripts aren’t completely self-contained. They require some sort of external data that must be supplied at the time you run them. The next chapter discusses different methods with which you can provide real-time data to your shell scripts for processing. 
-
-### Reading a directory using wildcards (parei aqui!!!)
