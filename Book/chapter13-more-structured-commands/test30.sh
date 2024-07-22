@@ -1,5 +1,6 @@
 #!/bin/bash
 # process new user accounts
+# Por algum motivo em Linux Ubuntu24.04 nao funciona mas nas versoes anteriores funciona
 
 input="users.csv"
 
