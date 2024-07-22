@@ -3,14 +3,27 @@
 
 input="users.csv"
 
+# usertest="christine"
+# nametest="Christine Blum"
+
+# echo "adding: $usertest"
+# echo "name: $nametest"
+
+# useradd -c "$nametest" -m $usertest
+
 if [ "$(id -u)" -ne 0 ]; then
     echo "Este script deve ser executado como root."
     exit 1
 fi
-
+echo
 while IFS=',' read -r userid name
 do
-    echo "adding $userid"
+    userid=$(echo "$userid" | xargs)
+    name=$(echo "$name" | xargs)
+
+    echo "adding: $userid"
     echo "name: $name"
+
     useradd -c "$name" -m $userid
+    echo
 done < "$input"
