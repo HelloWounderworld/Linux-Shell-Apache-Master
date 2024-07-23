@@ -1661,7 +1661,7 @@ A saída será algo como:
 
 O comando useradd -Z ou useradd --selinux-user é uma ferramenta poderosa para administradores de sistemas que precisam aplicar políticas de segurança avançadas e específicas para usuários individuais, proporcionando flexibilidade e controle sobre a segurança do sistema.
 
-### useradd --extrausers
+### useradd --extrausers (Parei aqui!)
 O comando useradd --extrausers é usado para criar um novo usuário em sistemas operacionais Linux que utilizam o módulo de autenticação "extrausers" do PAM (Pluggable Authentication Modules).
 
 Vamos entender melhor a utilidade desse comando:
