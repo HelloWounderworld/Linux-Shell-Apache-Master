@@ -1,0 +1,15 @@
+# Understanding Linux File Permissions
+
+This chapter discussed the command line commands you need to know to manage the Linux security on your system. Linux uses a system of user IDs and group IDs to protect access to files, directories, and devices. Linux stores information about user accounts in the /etc/passwd file and information about groups in the /etc/group file. Each user is assigned a unique numeric user ID, along with a text login name to identify the user in the system. Groups are also assigned unique numerical group IDs and text group names. A group can contain one or more users to allowed shared access to system resources.
+
+Several commands are available for managing user accounts and groups. The useradd command allows you to create new user accounts, and the groupadd command allows you to create new group accounts. To modify an existing user account, use the usermod command. Similarly, use the groupmod command to modify group account information.
+
+Linux uses a complicated system of bits to determine access permissions for fi les and directories. Each fi le contains three security levels of protection: the file’s owner, a default group that has access to the file, and a level for everyone else on the system. Each security level is defined by three access bits: read, write, and execute. The combination of three bits is often referred to by the symbols rwx, for read, write, and execute. If a permission is denied, its symbol is replaced with a dash (such as r-- for read-only permission).
+
+The symbolic permissions are often referred to as octal values, with the three bits combined into one octal value and three octal values representing the three security levels. Use the umask command to set the default security settings for fi les and directories created on the system. The system administrator normally sets a default umask value in the /etc/profile fi le, but you can use the umask command to change your umask value at any time.
+
+Use the chmod command to change security settings for files and directories. Only the file’s owner can change permissions for a file or directory. However, the root user can change the security settings for any file or directory on the system. You can use the chown and chgrp commands to change the default owner and group of the file.
+
+The chapter closed with a discussion on how to use the set GID bit to create a shared directory. The SGID bit forces any new files or directories created in a directory to use the default group name of the parent directory, not that of the user who created them. This provides an easy way to share files between users on the system.
+
+Now that you’re up to speed with file permissions, it’s time to take a closer look at how to work with the actual file system in Linux. The next chapter shows you how to create new partitions in Linux from the command line and then how to format the new partitions so that they can be used in the Linux virtual directory.

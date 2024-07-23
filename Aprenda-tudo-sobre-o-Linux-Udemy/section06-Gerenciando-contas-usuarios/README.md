@@ -1557,7 +1557,7 @@ Aqui, jdoe jdoe indica que o diretório é de propriedade do usuário jdoe e do 
 
 O comando useradd -U ou useradd --user-group é uma ferramenta útil para criar usuários com grupos primários correspondentes, proporcionando flexibilidade e controle sobre a organização e segurança do sistema.
 
-### useradd -Z ou useradd --selinux-user (Parei aqui!)
+### useradd -Z ou useradd --selinux-user (Verifique melhor esse conteudo pois ficou confuso e nao esta funcionando a explicacao)
 O comando useradd -Z ou useradd --selinux-user é usado para especificar um mapeamento de usuário SELinux (Security-Enhanced Linux) para um novo usuário durante a criação da conta. SELinux é um módulo de segurança do Linux que fornece um mecanismo para suportar políticas de segurança obrigatórias. Ele usa contextos de segurança para controlar o acesso a arquivos, processos e outros recursos do sistema.
 
 #### Utilidade
@@ -1585,6 +1585,43 @@ A saída será algo como:
     staff_u         s0-s0:c0.c1023   *
     guest_u         s0               *
     xguest_u        s0               *
+
+###### Obs
+Caso ocorra o seguinte erro abaixo
+
+    ValueError: SELinux policy is not managed or store cannot be accessed.
+
+Ou o o comando nao foi encontrado, como 
+
+    Command 'semanage'
+
+sera necessario realizar a instalacao
+
+    sudo apt-get install policycoreutils-python-utils
+
+E, alem disso, sera necessario habilitar o SELinux para a consulta. Para isso, precisaria verificar o seguinte
+
+    sestatus
+
+Se aparecer algo como
+
+    SELinux status:                 disabled
+
+Ou seja. indica que sera necessario realizar a sua habilitacao da seguinte forma
+
+    sudo nano /etc/selinux/config
+
+Mude a linha que diz SELINUX=disabled para SELINUX=enforcing ou SELINUX=permissive
+
+    SELINUX=enforcing
+
+Em seguida, reinicie o sistema
+
+    sudo reboot
+
+Novamente, realize a consulta do status
+
+    sestatus
 
 ##### Passo 2: Criar o Usuário com o Mapeamento SELinux Especificado
 Use o comando useradd com a opção -Z para especificar o mapeamento de usuário SELinux:
