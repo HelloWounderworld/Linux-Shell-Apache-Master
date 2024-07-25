@@ -16,3 +16,10 @@ cat test4
 
 ls -al test badtest test2 2> test5
 cat test5
+
+ls -al test test2 test3 badtest 2> test6 1> test7
+cat test6
+cat test7
+
+ls -al test test2 test3 badtest &> test7
+cat test7

@@ -15,4 +15,4 @@ The tee command is a handy way to send output both to the standard output and to
 
 In Chapter 16, you’ll see how to control and run your scripts. Linux provides several different methods for running scripts other than directly from the command line interface prompt. You’ll see how to schedule your scripts to run at a specific time, as well as learn how to pause them while they’re running.
 
-## Redirecting errors and data (Parei aqui!)
+## Listing Open File Descriptors (Parei aqui!)
