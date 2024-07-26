@@ -1,7 +1,9 @@
+# STDIN
 cat
 
 cat < testfile
 
+# STDOUT
 ls -l > test2
 cat test2
 
@@ -11,6 +13,7 @@ cat test2
 ls -al badfile > test3
 cat test3
 
+# STDERR
 ls -al badfile 2> test4
 cat test4
 
