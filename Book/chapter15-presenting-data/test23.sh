@@ -1,5 +1,8 @@
 #!/bin/bash
 # read file and create INSERT statements for MySQL
+#
+# ./test23 members.csv
+#
 
 outfile='members.sql'
 IFS=','

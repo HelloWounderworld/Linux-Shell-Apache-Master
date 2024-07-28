@@ -1,0 +1,11 @@
+ls -al > /dev/null
+cat /dev/null
+
+ls -al badfile test16.sh 2> /dev/null
+
+cat testfile
+
+# Serve para tu conseguir apagar o conteudo dentro do arquivo sem a necessidade de ter que abrir ou exibir o conteudo dentro dela, como, tambem, sem a necessidade de
+# remover ou recriar o arquivo inteiro.
+cat /dev/null > testfile
+cat testfile

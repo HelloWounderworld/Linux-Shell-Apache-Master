@@ -1,6 +1,16 @@
 #!/bin/bash
 # using a temporary directory
+#
+# ./test21
+# ls -al
+# cd direotrio que foi criado
+# ls -al
+# cat temp.N5F3O6
+# cat temp.SQslb7
+#
 
+# Caso vc queira criar esse diretorio temporario dentro do diretorio /tmp
+# tempdir=$(mktemp -d -t dir.XXXXXX)
 tempdir=$(mktemp -d dir.XXXXXX)
 cd $tempdir
 tempfile1=$(mktemp temp.XXXXXX)

@@ -1,6 +1,16 @@
 #!/bin/bash
 # using the tee command for logging
 #
+# date | tee testfile
+# cat testfile
+#
+# who | tee testfile
+# cat testfile
+#
+# to append
+# date | tee -a testfile
+# cat testfile
+#
 # ./test22.sh
 # cat test22file
 #

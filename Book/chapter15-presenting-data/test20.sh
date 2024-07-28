@@ -1,5 +1,10 @@
 #!/bin/bash
 # creating a temp file in /tmp
+#
+# O -t forca a criacao do arquivo no diretorio temporario, /tmp
+# mktemp -t test.XXXXXX
+# ls -al /tmp/test*
+#
 
 tempfile=$(mktemp -t tmp.XXXXXX)
 
