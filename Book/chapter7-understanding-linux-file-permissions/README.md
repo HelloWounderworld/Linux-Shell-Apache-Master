@@ -1661,7 +1661,7 @@ A saída será algo como:
 
 O comando useradd -Z ou useradd --selinux-user é uma ferramenta poderosa para administradores de sistemas que precisam aplicar políticas de segurança avançadas e específicas para usuários individuais, proporcionando flexibilidade e controle sobre a segurança do sistema.
 
-### useradd --extrausers (Parei aqui!)
+### useradd --extrausers
 O comando useradd --extrausers é usado para criar um novo usuário em sistemas operacionais Linux que utilizam o módulo de autenticação "extrausers" do PAM (Pluggable Authentication Modules).
 
 Vamos entender melhor a utilidade desse comando:
@@ -1749,7 +1749,7 @@ O "usermod" serve para modificar algum usuario ja existente.
         -W, --del-subgids FIRST-LAST  remove range of subordinate gids
         -Z, --selinux-user SEUSER     new SELinux user mapping for the user account
 
-### usermod -a
+### usermod -a (Parei aqui!)
 Para fornecer permissão sudo (superusuário) para um usuário recém-criado em um sistema Linux, você pode seguir estes passos:
 
 Abra um terminal ou console como usuário root ou com privilégios de superusuário.
