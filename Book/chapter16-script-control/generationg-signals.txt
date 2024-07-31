@@ -1,0 +1,12 @@
+# Interrupting a process
+
+sleep 100
+Ctrl + C # Stop the process prematurely - SIGINT
+
+# Pausing a process
+
+sleep 100
+Ctrl + Z # SIGTSTP - Just stop the processo, is not terminating. Stopping the process leaves the program in memory and able to continue running from where it left off.
+ps -l # if you want to see stopped process
+exit # Warns you that there is stopped process. If you still want to exit, just type "exit" again.
+kill -9 [PID] # SIGKILL - Kill the process and terminate

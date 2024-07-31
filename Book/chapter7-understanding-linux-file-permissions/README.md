@@ -1852,3 +1852,5 @@ Use the chmod command to change security settings for files and directories. Onl
 The chapter closed with a discussion on how to use the set GID bit to create a shared directory. The SGID bit forces any new files or directories created in a directory to use the default group name of the parent directory, not that of the user who created them. This provides an easy way to share files between users on the system.
 
 Now that you’re up to speed with file permissions, it’s time to take a closer look at how to work with the actual file system in Linux. The next chapter shows you how to create new partitions in Linux from the command line and then how to format the new partitions so that they can be used in the Linux virtual directory.
+
+## Key points
