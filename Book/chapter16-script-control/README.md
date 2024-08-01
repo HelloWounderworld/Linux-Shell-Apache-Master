@@ -39,3 +39,11 @@ Because the nohup command disassociates the process from the terminal, the proce
 If you run another command using nohup, the output is appended to the existing nohup.out file. Be careful when running multiple commands from the same directory, because all the output is sent to the same nohup.out file, which can get confusing.
 
 The output appears in the nohup.out fi le just as if the process ran on the command line
+
+### Being Nice:
+By default, all processes started from the shell have the same scheduling priority on the Linux system.
+
+The scheduling priority is an integer value, from -20 (the highest priority) to +19 (the lowest priority). By default, the bash shell starts all processes with a scheduling priority of 0.
+
+#### TIP
+It’s confusing to remember that -20, the lowest value, is the highest priority and 19, the highest value, is the lowest priority. Just remember the phrase, “Nice guys finish last.” The “nicer” or higher you are in value, the lower your chance of getting the CPU.

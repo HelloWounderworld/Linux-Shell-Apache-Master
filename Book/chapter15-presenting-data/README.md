@@ -14,3 +14,5 @@ The mktemp command is a handy feature of the bash shell that allows you to easil
 The tee command is a handy way to send output both to the standard output and to a log file. This enables you to display messages from your script on the monitor and store them in a log file at the same time.
 
 In Chapter 16, you’ll see how to control and run your scripts. Linux provides several different methods for running scripts other than directly from the command line interface prompt. You’ll see how to schedule your scripts to run at a specific time, as well as learn how to pause them while they’re running.
+
+## Key points:

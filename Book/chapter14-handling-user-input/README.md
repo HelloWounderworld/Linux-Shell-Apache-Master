@@ -18,3 +18,5 @@ An interactive method to obtain data from your script users is the read command.
 Several options are available for the read  command that allow you to customize the data input into your script, such as using hidden data entry, applying timed data entry, and requesting a specific number of input characters.
 
 In the next chapter, we look further into how bash shell scripts output data. So far, you’ve seen how to display data on the monitor and redirect it to a fi le. Next, we explore a few other options that you have available not only to direct data to specifi c locations but also to direct specifi c types of data to specifi c locations. This will help make your shell scripts look professional!
+
+## Key points:

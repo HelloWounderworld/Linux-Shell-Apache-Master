@@ -2,7 +2,7 @@
 # Test job control
 #
 # ./test10.sh
-# ./test10.sh > test10.out &
+# ./test10.sh > test10.out & # Ele so vai iniciar um outro processo, mas enviando a saida, que seria exibido normalmente na tela, dentro desse arquivo test10.out, rodando em segundo plano
 # jobs
 # jobs -l
 #
