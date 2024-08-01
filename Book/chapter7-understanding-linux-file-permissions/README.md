@@ -1749,6 +1749,55 @@ O "usermod" serve para modificar algum usuario ja existente.
         -W, --del-subgids FIRST-LAST  remove range of subordinate gids
         -Z, --selinux-user SEUSER     new SELinux user mapping for the user account
 
+### usermod -b
+O comando usermod -b (ou --badnames) é utilizado no Linux para permitir que nomes de usuários que não seguem as convenções padrão sejam aceitos. Isso é útil em situações onde você precisa criar ou modificar usuários com nomes que podem conter caracteres especiais, espaços ou que não são alfanuméricos.
+
+#### Utilidade do Comando usermod -b
+
+- Flexibilidade na Nomenclatura: Permite que administradores de sistema criem nomes de usuários mais descritivos ou que incluam informações adicionais, como nomes completos ou títulos.
+
+- Suporte a Nomes Não Convencionais: Em ambientes onde os nomes de usuários podem precisar ser mais informativos, como em sistemas de gerenciamento de projetos ou em ambientes colaborativos, essa opção é valiosa.
+
+#### Exemplo de Aplicação
+
+##### 1. Criar um Usuário com Nome Inválido
+Suponha que você queira criar um usuário chamado "John Doe". Normalmente, nomes de usuários não podem conter espaços. No entanto, usando o -b, você pode fazer isso:
+
+    sudo useradd -b "John Doe"
+
+##### 2. Modificar um Usuário Existente
+Se você já tem um usuário chamado jdoe e deseja alterar seu nome para "John Doe", você pode usar o seguinte comando:
+
+    sudo usermod -b "John Doe" jdoe
+
+##### 3. Verificar a Alteração
+Para verificar se a alteração foi bem-sucedida, você pode usar o comando getent:
+
+    getent passwd jdoe
+
+A saída deve mostrar que o nome do usuário foi alterado para "John Doe".
+
+#### Considerações
+
+- Cuidado com a Segurança: Usar nomes de usuários que não seguem as convenções padrão pode causar problemas de segurança ou de gerenciamento, pois muitos scripts e ferramentas podem não lidar corretamente com esses nomes.
+
+- Compatibilidade: Verifique se o sistema e as aplicações que você está usando suportam nomes de usuários não convencionais.
+
+#### Resumo
+O comando usermod -b é uma ferramenta poderosa para administradores de sistemas que precisam de flexibilidade na nomenclatura de usuários. No entanto, deve ser usado com cautela para evitar problemas de compatibilidade e segurança.
+
+### usermod -c
+
+### usermod -d
+
+### usermod -e
+
+### usermod -f
+
+### usermod -g
+
+### usermod -G
+
 ### usermod -a (Parei aqui!)
 Para fornecer permissão sudo (superusuário) para um usuário recém-criado em um sistema Linux, você pode seguir estes passos:
 
@@ -1808,6 +1857,38 @@ Pronto! Agora o usuário recém-criado terá permissão sudo e poderá executar 
 Essa abordagem é mais conveniente do que editar diretamente o arquivo /etc/sudoers, pois você não precisa se preocupar com a sintaxe do arquivo ou com possíveis erros de configuração.
 
 Observe que, se você quiser remover a permissão sudo de um usuário, basta usar o comando deluser <username> sudo para removê-lo do grupo sudo.
+
+### usermod -h
+
+### usermod -l
+
+### usermod -L
+
+### usermod -m
+
+### usermod -o
+
+### usermod -p
+
+### usermod -R
+
+### usermod -P
+
+### usermod -s
+
+### usermod -u
+
+### usermod -U
+
+### usermod -v
+
+### usermod -V
+
+### usermod -w
+
+### usermod -W
+
+### usermod -Z
 
 ## userdel
 O comando "userdel" serve para deletar um usuario
