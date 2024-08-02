@@ -47,3 +47,28 @@ The scheduling priority is an integer value, from -20 (the highest priority) to 
 
 #### TIP
 It’s confusing to remember that -20, the lowest value, is the highest priority and 19, the highest value, is the lowest priority. Just remember the phrase, “Nice guys finish last.” The “nicer” or higher you are in value, the lower your chance of getting the CPU.
+
+#### Using the renice command
+
+- You can only renice processes that you own.
+
+- You can only renice your processes to a lower priority.
+
+- The root user can renice any process to any priority.
+
+If you want to fully control running processes, you must be logged in as the root account or use the sudo command.
+
+### Running Like Clockwork
+
+#### Scheduling a job using the at command
+The atd daemon checks a special directory on the system (usually /var/spool/at) for jobs submitted using the at command.
+
+##### Understanding the at command format
+A few years ago, the batch command was another method that allowed a script to be run at a later time. The batch command was unique because you could schedule a script to run when the system was at a lower usage level. However, nowadays, the batch command is just simply a script, /usr/bin/batch, that calls the at command and submits your job to the b queue.
+
+#### Scheduling regular scripts
+The astute reader might be wondering just how you would be able to set a command to execute on the last day of every month because you can’t set the dayofmonth value to cover every month. This problem has plagued Linux and Unix programmers, and has spawned quite a few different solutions. A common method is to add an if-then statement that uses the date command to check if tomorrow’s date is 01:
+
+    00 12 * * * if [`date +%d -d tomorrow` = 01 ] ;  then ; command
+
+This checks every day at 12 noon to see if it’s the last day of the month, and if so, cron runs the command.
