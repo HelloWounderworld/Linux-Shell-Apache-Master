@@ -72,3 +72,26 @@ The astute reader might be wondering just how you would be able to set a command
     00 12 * * * if [`date +%d -d tomorrow` = 01 ] ;  then ; command
 
 This checks every day at 12 noon to see if it’s the last day of the month, and if so, cron runs the command.
+
+##### Looking at the anacron program
+Notice that anacron does not run the scripts located in /etc/cron.hourly. This is because the anacron program does not deal with scripts that have execution time needs of less than daily.
+
+### Starting scripts with a news shell
+
+    $ cat .bashrc
+    # .bashrc
+    # Source global definitions
+    if [ -f /etc/bashrc ]; then
+    . /etc/bashrc
+    fi
+    # User specific aliases and functions
+    echo "I'm in a new shell!"
+    $
+    $ bash
+    I'm in a new shell!
+    $
+    $ exit
+    exit
+    $
+
+The .bashrc file is also typically run from one of the bash startup fi les. Because the .bashrc file runs both when you log into the bash shell and when you start a bash shell, if you need a script to run in both instances, place your shell script inside this file.
