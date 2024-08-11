@@ -1789,7 +1789,7 @@ O comando usermod -b é uma ferramenta poderosa para administradores de sistemas
 ### usermod -c (ou --comment)
 O comando
 
-    usermod -c
+    usermod -c or usermod --comment 
 
 é utilizado no Linux para modificar o campo de comentário (ou GECOS) associado a um usuário existente. 
 
@@ -1839,14 +1839,16 @@ A saída deve mostrar a linha correspondente ao usuário jdoe, incluindo o novo 
 #### Resumo
 O comando usermod -c é uma ferramenta útil para administradores de sistemas que desejam adicionar ou modificar informações descritivas sobre usuários. Ele permite que você mantenha um registro organizado e informativo sobre as contas de usuário, facilitando a identificação e o gerenciamento em ambientes multiusuário.
 
-### usermod -d (Parei aqui!)
+### usermod -d
 O comando
 
     usermod -d
     
-é utilizado no Linux para modificar o diretório home de um usuário existente.
+é utilizado no Linux para modificar o caminho do diretório home de um usuário existente.
 
 O diretório home é o local onde os arquivos pessoais do usuário são armazenados, e é o diretório padrão que o sistema utiliza quando o usuário faz login.
+
+O comando usermod -d é útil para atualizar o caminho do diretório home de um usuário, especialmente em cenários de reorganização ou migração. Embora não mova os arquivos automaticamente, ele é uma parte importante do processo de gerenciamento de usuários e diretórios no Linux.
 
 #### Utilidade do Comando usermod -d
 
@@ -1869,14 +1871,274 @@ A sintaxe básica do comando é:
 
 #### Exemplo de Aplicação
 
+##### 1. Mudar o caminho do Diretório Home de um Usuário
+Suponha que você tenha um usuário chamado jdoe e queira mudar o caminho do seu diretório home de /home/jdoe para /mnt/users/jdoe. Você pode fazer isso com o seguinte comando:
 
-### usermod -e
+    sudo usermod -d /mnt/users/jdoe jdoe
 
-### usermod -f
+##### 2. Verificar a Alteração
+Para verificar se a alteração foi bem-sucedida, você pode usar o comando getent:
 
-### usermod -g
+    getent passwd jdoe
 
-### usermod -G
+A saída deve mostrar a linha correspondente ao usuário jdoe, incluindo o novo diretório home. A saída pode ser semelhante a:
+
+    jdoe:x:1001:1001::/mnt/users/jdoe:/bin/bash
+
+#### Considerações
+
+- Diretório Existente: O novo diretório home deve existir antes de você executar o comando usermod -d. Se o diretório não existir, você precisará criá-lo manualmente usando o comando mkdir.
+
+- Permissões: Certifique-se de que o novo diretório home tenha as permissões corretas para que o usuário possa acessar e modificar seus arquivos.
+
+- Mover Dados: O comando usermod -d não move os arquivos do diretório home antigo para o novo. Se você precisar mover os dados, você terá que fazê-lo manualmente usando comandos como mv.
+
+#### Resumo
+O comando usermod -d é uma ferramenta útil para administradores de sistemas que precisam modificar o diretório home de um usuário. Ele permite que os administradores reorganizem a estrutura de diretórios do sistema, gerenciem espaço em disco e mantenham a segurança e a organização dos diretórios home dos usuários.
+
+### usermod -e (ou --expiredate)
+O comando
+    
+    usermod -e
+
+é utilizado no Linux para definir a data de expiração de uma conta de usuário.
+
+Isso significa que, após a data especificada, o usuário não poderá mais fazer login no sistema. Essa funcionalidade é útil em várias situações, como em ambientes de trabalho temporários, contas de usuários que não devem ter acesso contínuo ou para gerenciar contas de usuários que precisam ser desativadas após um certo período.
+
+#### Utilidade do Comando usermod -e
+
+- Gerenciamento de Contas Temporárias: Permite que administradores criem contas de usuários que são válidas apenas por um período específico, facilitando o gerenciamento de acesso.
+
+- Segurança: Ajuda a garantir que contas de usuários que não são mais necessárias sejam desativadas automaticamente, reduzindo o risco de acesso não autorizado.
+
+- Conformidade: Em ambientes regulados, pode ser necessário garantir que contas de usuários sejam desativadas após um certo período, e o comando usermod -e pode ajudar a atender a esses requisitos.
+
+#### Sintaxe
+A sintaxe básica do comando é:
+
+    usermod -e YYYY-MM-DD username
+
+- -e: Indica que você está definindo a data de expiração da conta.
+
+- YYYY-MM-DD: A data de expiração no formato ano-mês-dia.
+
+- username: O nome do usuário cuja data de expiração você deseja modificar.
+
+#### Exemplo de Aplicação
+
+##### 1. Definir a Data de Expiração de um Usuário
+Suponha que você tenha um usuário chamado tempuser e queira que a conta expire em 30 de setembro de 2023. Você pode fazer isso com o seguinte comando:
+
+    sudo usermod -e 2023-09-30 tempuser
+
+##### 2. Verificar a Alteração
+Para verificar se a data de expiração foi definida corretamente, você pode usar o comando chage:
+
+    sudo chage -l tempuser
+
+A saída deve incluir uma linha indicando a data de expiração, como:
+
+    Account expires: 30/09/2023
+
+##### 3. Data que nunca ira expirar
+Caso vc queira mudar a data de expieracao da conta de um usuario para que ele nunca expire existem duas formas. Sao elas:
+
+    usermod -e 9999-12-31 username
+
+ou
+
+    usermod -e "" username or usermod -e -1 username
+
+Enquanto na primeira ira mostrar
+
+    Account expires                                         : Dec 31, 9999
+    
+A segunda ela ira voltar na forma
+
+    Account expires                                         : never
+
+###### Obs
+Ou, em algumas distribuições, você pode usar:
+
+    sudo usermod -e 1970-01-01 username
+
+O uso de uma data inválida ou uma data que representa o "início do tempo" pode ser interpretado como "nunca expirar".
+
+###### Alternativa: Usando chage
+Outra maneira de definir a expiração da conta para nunca é usando o comando chage diretamente:
+
+    sudo chage -E -1 username
+
+#### Considerações
+
+- Formato da Data: A data deve ser fornecida no formato YYYY-MM-DD. Se a data não for válida, o comando não será executado.
+
+- Desativação da Conta: Após a data de expiração, o usuário não poderá fazer login, mas a conta ainda existirá no sistema. Para remover completamente a conta, você precisaria usar o comando userdel.
+
+- Reativação: Para reativar uma conta expirada, você pode usar o comando usermod -e novamente, definindo uma nova data de expiração ou removendo a data de expiração.
+
+#### Resumo
+O comando usermod -e é uma ferramenta útil para administradores de sistemas que precisam gerenciar a validade das contas de usuários. Ele permite que as contas sejam automaticamente desativadas após uma data específica, ajudando a manter a segurança e a conformidade em ambientes de TI.
+
+### usermod -f (ou --inactive)
+O comando
+
+    usermod -f
+    
+é utilizado no Linux para definir o número de dias após a expiração da senha de um usuário antes que a conta seja desativada. 
+
+Isso significa que, se a senha de um usuário expirar, ele terá um período de inatividade (definido em dias) para alterar sua senha antes que a conta seja bloqueada e o usuário não possa mais fazer login.
+
+#### Utilidade do Comando usermod -f
+
+- Gerenciamento de Segurança: Permite que administradores configurem um período de inatividade após a expiração da senha, garantindo que os usuários tenham tempo para atualizar suas credenciais antes que suas contas sejam desativadas.
+
+- Prevenção de Acesso Não Autorizado: Ajuda a evitar que contas permaneçam ativas sem supervisão, forçando os usuários a manterem suas senhas atualizadas.
+
+- Conformidade: Em ambientes regulados, pode ser necessário garantir que as contas sejam desativadas após um certo período de inatividade, e o comando usermod -f pode ajudar a atender a esses requisitos.
+
+#### Sintaxe
+A sintaxe básica do comando é:
+
+    usermod -f INACTIVE_DAYS username
+
+- -f: Indica que você está definindo o número de dias de inatividade após a expiração da senha.
+
+- INACTIVE_DAYS: O número de dias após a expiração da senha antes que a conta seja desativada. Se definido como 0, a conta será desativada imediatamente após a expiração da senha.
+
+- username: O nome do usuário cuja configuração de inatividade você deseja modificar.
+
+#### Exemplo de Aplicação
+
+##### 1. Definir o Período de Inatividade
+Suponha que você tenha um usuário chamado jdoe e queira definir um período de inatividade de 7 dias após a expiração da senha. Você pode fazer isso com o seguinte comando:
+
+    sudo usermod -f 7 jdoe
+
+##### 2. Verificar a Alteração
+Para verificar se a configuração foi aplicada corretamente, você pode usar o comando chage:
+
+    sudo chage -l jdoe or getent shadow jdoe or vipw -s (se tu fizer "sudo vipw -s | grep "username" vai travar...)
+
+A saída deve incluir uma linha indicando o número de dias de inatividade, como:
+
+    Password inactive: 7
+
+#### Considerações
+- Valor de INACTIVE_DAYS: Se você definir INACTIVE_DAYS como -1, isso significa que não haverá período de inatividade, e a conta não será desativada após a expiração da senha.
+
+- Interação com a Expiração da Senha: O comando usermod -f funciona em conjunto com a expiração da senha. Portanto, é importante garantir que a expiração da senha esteja configurada corretamente para que o período de inatividade tenha efeito.
+
+#### Resumo
+O comando usermod -f é uma ferramenta útil para administradores de sistemas que precisam gerenciar a segurança das contas de usuário. Ele permite que os administradores definam um período de inatividade após a expiração da senha, garantindo que os usuários tenham tempo para atualizar suas credenciais antes que suas contas sejam desativadas.
+
+### usermod -g (ou --gid) (Parei aqui!)
+O comando
+    
+    usermod -g
+    
+é utilizado no Linux para alterar o grupo primário de um usuário existente.
+
+O grupo primário é o grupo que é associado ao usuário por padrão e é utilizado para determinar as permissões de acesso a arquivos e diretórios. Cada usuário pode pertencer a múltiplos grupos, mas apenas um deles é considerado o grupo primário.
+
+#### Utilidade do Comando usermod -g
+- Alteração do Grupo Primário: Permite que administradores mudem o grupo primário de um usuário, o que pode ser necessário em situações de reorganização de grupos ou mudanças nas responsabilidades do usuário.
+
+- Gerenciamento de Permissões: Ao alterar o grupo primário, você pode controlar as permissões de acesso do usuário a arquivos e diretórios que pertencem a esse grupo.
+
+- Organização: Facilita a gestão de usuários e grupos em ambientes onde as funções e responsabilidades dos usuários podem mudar ao longo do tempo.
+
+#### Sintaxe
+A sintaxe básica do comando é:
+
+    usermod -g new_group username
+
+- -g: Indica que você está alterando o grupo primário do usuário.
+
+- new_group: O nome ou ID do novo grupo primário que você deseja atribuir ao usuário.
+
+- username: O nome do usuário cujo grupo primário você deseja modificar.
+
+#### Exemplo de Aplicação
+
+##### 1. Alterar o Grupo Primário de um Usuário
+Suponha que você tenha um usuário chamado jdoe e queira alterar seu grupo primário para developers. Você pode fazer isso com o seguinte comando:
+
+    sudo usermod -g developers jdoe
+
+##### 2. Verificar a Alteração
+Para verificar se a alteração foi bem-sucedida, você pode usar o comando id:
+
+    id jdoe
+
+A saída deve mostrar o novo grupo primário do usuário, como:
+
+    uid=1001(jdoe) gid=1002(developers) groups=1002(developers),1003(admins)
+
+#### Considerações
+- Grupo Existente: O grupo que você está tentando definir como primário deve existir no sistema. Você pode verificar os grupos existentes usando o comando getent group.
+
+- Permissões: Alterar o grupo primário de um usuário pode afetar suas permissões de acesso a arquivos e diretórios. Certifique-se de que o novo grupo tenha as permissões apropriadas para as tarefas que o usuário precisa realizar.
+
+#### Resumo
+O comando usermod -g é uma ferramenta útil para administradores de sistemas que precisam gerenciar a associação de usuários a grupos. Ele permite que os administradores alterem o grupo primário de um usuário, facilitando a administração de permissões e responsabilidades em ambientes multiusuário.
+
+### usermod -G (ou --groups)
+O comando
+
+    usermod -G
+    
+é utilizado no Linux para modificar a lista de grupos suplementares a que um usuário pertence.
+
+Grupos suplementares são grupos adicionais além do grupo primário do usuário, e eles permitem que o usuário tenha permissões de acesso a recursos e arquivos que pertencem a esses grupos.
+
+#### Utilidade do Comando usermod -G
+- Gerenciamento de Grupos Suplementares: Permite que administradores adicionem ou removam usuários de grupos suplementares, o que é útil para conceder permissões adicionais sem alterar a associação do usuário ao grupo primário.
+
+- Flexibilidade: Facilita a gestão de permissões em sistemas onde os usuários precisam pertencer a múltiplos grupos para acessar diferentes recursos ou serviços.
+
+- Segurança: Ajuda a manter a segurança do sistema, garantindo que os usuários tenham apenas as permissões necessárias para suas funções.
+
+#### Sintaxe
+A sintaxe básica do comando é:
+
+    usermod -G group1,group2,... username
+
+- -G: Indica que você está especificando os grupos suplementares.
+
+- group1,group2,...: Uma lista de grupos aos quais o usuário deve ser adicionado. Os grupos devem ser separados por vírgulas.
+
+- username: O nome do usuário que você deseja modificar.
+
+#### Exemplo de Aplicação
+
+##### 1. Adicionar um Usuário a Grupos Suplementares
+Suponha que você tenha um usuário chamado jdoe e queira adicioná-lo aos grupos developers e admins. Você pode fazer isso com o seguinte comando:
+
+    sudo usermod -G developers,admins jdoe
+
+##### 2. Verificar a Alteração
+Para verificar se o usuário foi adicionado corretamente aos grupos, você pode usar o comando id:
+
+    id jdoe
+
+A saída deve incluir os grupos aos quais jdoe pertence, como:
+
+    uid=1001(jdoe) gid=1002(jdoe) groups=1002(jdoe),1003(developers),1004(admins)
+
+#### Considerações
+- Uso do -a:
+
+    Se você quiser adicionar o usuário a grupos suplementares sem remover o usuário de outros grupos, é crucial usar a opção -a (append) junto com -G. Por exemplo:
+
+        sudo usermod -aG developers,admins jdoe
+
+    Se você usar apenas -G sem -a, o usuário será removido de todos os grupos que não estão listados na opção -G.
+
+- Permissões: Certifique-se de que os grupos aos quais você está adicionando o usuário têm as permissões apropriadas para as tarefas que o usuário precisa realizar.
+
+#### Resumo
+O comando usermod -G é uma ferramenta essencial para administradores de sistemas que precisam gerenciar a associação de usuários a grupos de forma eficiente e segura. Ele permite que os usuários mantenham suas associações existentes enquanto recebem novas permissões, facilitando a administração de acesso em ambientes multiusuário.
 
 ### usermod -a (ou --append)
 Para fornecer permissão sudo (superusuário) para um usuário recém-criado em um sistema Linux, você pode seguir estes passos:
