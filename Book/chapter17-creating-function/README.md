@@ -17,3 +17,17 @@ The next chapter discusses the use of text graphics in your scripts. In this day
 
 ### Using functions:
 If you attempt to use a function before it’s deﬁ ned, you’ll get an error message.
+
+You also need to be careful about your function names. Remember, each function name must be unique, or you’ll have a problem. If you redeﬁne a function, the new deﬁnition overrides the original function deﬁnition, without producing any error messages:
+
+### Returning a Value:
+
+#### Using the return command:
+If you execute any other commands before retrieving the value of the function, using the $? variable, the return value from the function is lost. Remember that the $? variable returns the exit status of the last executed command.
+
+The second problem deﬁnes a limitation for using this return value technique. Because an exit status must be less than 256, the result of your function must produce an integer value less than 256. Any value over that returns an error value:
+
+### Using Variables in Functions:
+
+#### Passing parameters to a function:
+As mentioned earlier in the “Returning a Value” section, the bash shell treats functions just like mini-scripts.
