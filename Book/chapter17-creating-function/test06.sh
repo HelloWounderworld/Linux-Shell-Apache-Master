@@ -2,6 +2,8 @@
 # passing parameters to a function
 
 function addem {
+    # echo "Amount of randoms: $#"
+
     if [ $# -eq 0 ] || [ $# -gt 2 ]
     then
         echo -1
@@ -11,6 +13,7 @@ function addem {
     else
         echo $[ $1 + $2 ]
     fi
+
 }
 
 echo -n "Adding 10 and 15: "
@@ -28,4 +31,3 @@ echo
 echo -n "Finally, try adding three numbers: "
 value=$(addem 10 15 20)
 echo $value
-
