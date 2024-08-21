@@ -1,0 +1,19 @@
+$ function divem { echo $[ $1 / $2 ]; }
+$ divem 100 5
+20
+$
+
+$ function doubleit { read -p "Enter value: " value; echo $[
+$value * 2 ]; }
+$
+$ doubleit
+Enter value: 20
+40
+$
+
+$ function multem {
+> echo $[ $1 * $2 ]
+> }
+$ multem 2 5
+10
+$

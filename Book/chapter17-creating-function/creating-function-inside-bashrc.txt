@@ -1,0 +1,23 @@
+# .bashrc
+# Source global definitions
+if [ -r /etc/bashrc ]; then
+. /etc/bashrc
+fi
+function addem {
+echo $[ $1 + $2 ]
+}
+
+# .bashrc
+# Source global definitions
+if [ -r /etc/bashrc ]; then
+. /etc/bashrc
+fi
+. /home/rich/libraries/myfuncs
+
+$ addem 10 5
+15
+$ multem 10 5
+50
+$ divem 10 5
+2
+$

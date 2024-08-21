@@ -31,3 +31,8 @@ The second problem deﬁnes a limitation for using this return value technique. 
 
 #### Passing parameters to a function:
 As mentioned earlier in the “Returning a Value” section, the bash shell treats functions just like mini-scripts.
+
+### Using Functions on the Command Line
+
+#### Creating functions on the command line
+Be extremely careful when creating functions on the command line. If you use a function with the same name as a built-in command or another command, the function overrides the original command.
