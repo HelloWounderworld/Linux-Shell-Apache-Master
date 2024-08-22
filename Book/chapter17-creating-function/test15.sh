@@ -1,5 +1,6 @@
 #!/bin/bash
 # using a function defined in the .bashrc file
+# Por algum motivo mesmo definindo uma funcao dentro do .bashrc e quando chamo tal funcao via script nao esta funcionando...
 
 value1=10
 value2=5
