@@ -2032,7 +2032,7 @@ A saída deve incluir uma linha indicando o número de dias de inatividade, como
 #### Resumo
 O comando usermod -f é uma ferramenta útil para administradores de sistemas que precisam gerenciar a segurança das contas de usuário. Ele permite que os administradores definam um período de inatividade após a expiração da senha, garantindo que os usuários tenham tempo para atualizar suas credenciais antes que suas contas sejam desativadas.
 
-### usermod -g (ou --gid) (Parei aqui!)
+### usermod -g (ou --gid)
 O comando
     
     usermod -g
@@ -2066,6 +2066,10 @@ Suponha que você tenha um usuário chamado jdoe e queira alterar seu grupo prim
 
     sudo usermod -g developers jdoe
 
+Caso seja necessario criar um grupo antes disso bastaria colocar o seguinte comando
+
+    sudo groupadd new_group_name
+
 ##### 2. Verificar a Alteração
 Para verificar se a alteração foi bem-sucedida, você pode usar o comando id:
 
@@ -2076,7 +2080,11 @@ A saída deve mostrar o novo grupo primário do usuário, como:
     uid=1001(jdoe) gid=1002(developers) groups=1002(developers),1003(admins)
 
 #### Considerações
-- Grupo Existente: O grupo que você está tentando definir como primário deve existir no sistema. Você pode verificar os grupos existentes usando o comando getent group.
+- Grupo Existente:
+
+    O grupo que você está tentando definir como primário deve existir no sistema. Você pode verificar os grupos existentes usando o comando
+
+        getent group
 
 - Permissões: Alterar o grupo primário de um usuário pode afetar suas permissões de acesso a arquivos e diretórios. Certifique-se de que o novo grupo tenha as permissões apropriadas para as tarefas que o usuário precisa realizar.
 
@@ -2143,25 +2151,25 @@ O comando usermod -G é uma ferramenta essencial para administradores de sistema
 ### usermod -a (ou --append)
 Para fornecer permissão sudo (superusuário) para um usuário recém-criado em um sistema Linux, você pode seguir estes passos:
 
-Abra um terminal ou console como usuário root ou com privilégios de superusuário.
+- Abra um terminal ou console como usuário root ou com privilégios de superusuário.
 
-Edite o arquivo de configuração do sudo, geralmente localizado em /etc/sudoers. Você pode usar um editor de texto como o nano ou vi para fazer as alterações:
+- Edite o arquivo de configuração do sudo, geralmente localizado em /etc/sudoers. Você pode usar um editor de texto como o nano ou vi para fazer as alterações:
 
-    sudo nano /etc/sudoers
+        sudo nano /etc/sudoers
 
-No arquivo /etc/sudoers, localize a seção que contém as linhas de configuração existentes. Geralmente, essa seção começa com a linha # User privilege specification.
+- No arquivo /etc/sudoers, localize a seção que contém as linhas de configuração existentes. Geralmente, essa seção começa com a linha # User privilege specification.
 
-Abaixo dessa seção, adicione uma nova linha com o nome do usuário que você deseja adicionar ao sudoers, seguido da palavra-chave ALL=(ALL:ALL) ALL. Isso concederá ao usuário permissão total para usar o comando sudo.
+- Abaixo dessa seção, adicione uma nova linha com o nome do usuário que você deseja adicionar ao sudoers, seguido da palavra-chave ALL=(ALL:ALL) ALL. Isso concederá ao usuário permissão total para usar o comando sudo.
 
-Exemplo:
+    Exemplo:
 
-    # User privilege specification
-    root    ALL=(ALL:ALL) ALL
-    username    ALL=(ALL:ALL) ALL
+        # User privilege specification
+        root    ALL=(ALL:ALL) ALL
+        username    ALL=(ALL:ALL) ALL
 
-Substitua username pelo nome do usuário que você deseja adicionar.
+- Substitua username pelo nome do usuário que você deseja adicionar.
 
-Salve as alterações e saia do editor de texto.
+- Salve as alterações e saia do editor de texto.
 
 Alternativamente, você também pode usar o comando visudo para editar o arquivo /etc/sudoers. O visudo é uma ferramenta segura que verifica a sintaxe do arquivo antes de salvá-lo, evitando erros de configuração.
 
@@ -2203,7 +2211,6 @@ A sintaxe básica do comando é:
 - username: O nome do usuário que você deseja modificar.
 
 #### Aqui estão os passos:
-
 Abra um terminal ou console como usuário root ou com privilégios de superusuário.
 
 Use o comando usermod para adicionar o usuário ao grupo sudo:
