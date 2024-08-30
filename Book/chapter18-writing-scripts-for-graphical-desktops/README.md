@@ -8,3 +8,12 @@ The dialog program provides several prebuilt text widgets for creating Windows-l
 If you’re running your shell scripts in a graphical X Window environment, you can utilize even more tools in your interactive scripts. For the KDE desktop, there’s the kdialog program. This program provides simple commands to create windows widgets for all the basic windows functions. For the GNOME desktop, there are the gdialog and zenity programs. Each of these programs provides window widgets that blend into the GNOME desktop just like a real Windows application.
 
 The next chapter dives into the subject of editing and manipulating text data ﬁles. Often the biggest use of shell scripts revolves around parsing and displaying data in text ﬁles such as log and error ﬁles. The Linux environment includes two very useful tools, sed and gawk , for working with text data in your shell scripts. The next chapter introduces you to these tools, and shows the basics of how to use them.
+
+## Key point
+
+### Doing Windows
+The dialog package isn’t installed in all Linux distributions by default. If it’s not installed by default, because of its popularity it’s almost always included in the software repository. Check your specific Linux distribution documentation for how to load the dialog package. For the Ubuntu Linux distribution, the following is the command line command to install it:
+
+    sudo apt-get install dialog
+
+That package installs the dialog package plus the required libraries for your system.
