@@ -17,3 +17,8 @@ The dialog package isn’t installed in all Linux distributions by default. If i
     sudo apt-get install dialog
 
 That package installs the dialog package plus the required libraries for your system.
+
+### Getting Graphic
+
+#### The KDE environment
+Just because your Linux distribution uses the KDE desktop doesn’t necessarily mean it has the kdialog package installed by default. You may need to manually install it from the distribution repository.
