@@ -1,0 +1,14 @@
+# sed commands
+
+echo "This is a test" | sed 's/test/big test/'
+
+sed 's/dog/cat/' data1.txt
+
+sed -e 's/brown/green/; s/dog/cat/' data1.txt
+
+sed -e '
+> s/brown/green/
+> s/fox/elephant/
+> s/dog/cat/' data1.txt
+
+sed -f script1.sed data1.txt
