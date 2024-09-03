@@ -16,3 +16,6 @@ It can be easy to confuse your sed editor script files with your bash shell scri
 
 #### Getting to know the gawk program
 The gawk program is not installed by default on all distributions. If your Linux distribution does not have the gawk program, install the gawk package using Chapter 9 as a guide.
+
+##### Reading the program script from the command line
+To terminate the gawk program, you must signal that the data stream has ended. The bash shell provides a key combination to generate an End-of-File (EOF) character. The Ctrl+D key combination generates an EOF character in bash. Using that key combination terminates the gawk program and returns you to a command line interface prompt.
