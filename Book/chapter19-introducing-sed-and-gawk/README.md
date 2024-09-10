@@ -19,3 +19,6 @@ The gawk program is not installed by default on all distributions. If your Linux
 
 ##### Reading the program script from the command line
 To terminate the gawk program, you must signal that the data stream has ended. The bash shell provides a key combination to generate an End-of-File (EOF) character. The Ctrl+D key combination generates an EOF character in bash. Using that key combination terminates the gawk program and returns you to a command line interface prompt.
+
+### Deleting lines
+Remember that the sed editor doesn’t touch the original file. Any lines you delete are only gone from the output of the sed editor. The original file still contains the “deleted” lines.
