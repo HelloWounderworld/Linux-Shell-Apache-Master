@@ -1,17 +1,3 @@
-gawk '(print "Hello World!"}'
-
-gawk '{print "Hello World!"}'
-
-gawk '{print $1}' data2.txt
-
-gawk -F: '{print $1}' /etc/passwd
-
-echo "My name is Rich" | gawk '{$4="Christine"; print $0}'
-
-gawk '{
-> $4="Christine"
-> print $0}'
-
 gawk -F: -f script2.gawk /etc/passwd
 
 gawk -F: -f script3.gawk /etc/passwd
