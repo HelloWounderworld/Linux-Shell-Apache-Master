@@ -52,5 +52,10 @@ The correct form
 
 ### Running scripts after processing data
 
-    gawk 'BEGIN {print "The data3 File Contents:"}
-    > {print $0}
+    gawk 'BEGIN {print "The data3.txt File Contents:"}
+    {print $0}
+    END {print "End of File"}' data3.txt
+
+    cat script4.gawk
+
+    gawk -f script4.gawk /etc/passwd

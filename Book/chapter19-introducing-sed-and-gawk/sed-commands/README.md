@@ -30,6 +30,11 @@ or
 
     sed -f script1.sed data1.txt
 
+### Substituting flags
+Its structure
+
+    s/pattern/replacement/flags
+
     sed 's/test/trial/' data4.txt
 
 ### Specify which occurrence of the matching pattern the sed editor should substitute new text for
@@ -56,7 +61,18 @@ or
 
     sed 's!/bin/bash!/bin/csh!' /etc/passwd
 
-### Addressing the numericline
+### Using Address
+Its structure
+
+    [address]command
+
+    address {
+        command1
+        command2
+        command3
+    }
+
+Addressing the numeric line
 
     sed '2s/dog/cat/' data1.txt
 
@@ -65,6 +81,11 @@ or
     sed '2,$s/dog/cat/' data1.txt
 
 ### Using text pattern filters
+Its structure
+
+    /pattern/command
+
+
 
     grep teramatsu /etc/passwd
 
