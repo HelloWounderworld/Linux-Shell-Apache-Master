@@ -151,3 +151,6 @@ Here’s the format for doing this:
 
     sed '3c\
     This is a changed line of text.' data6.txt
+
+    sed '/number 3/c\
+    This is a changed line of text.' data6.txt
