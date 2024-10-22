@@ -85,8 +85,6 @@ Its structure
 
     /pattern/command
 
-
-
     grep teramatsu /etc/passwd
 
     sed '/teramatsu/s/bash/csh/' /etc/passwd
@@ -117,3 +115,39 @@ Be careful with the delete command, because if you forget to include an addressi
     sed '3,$d' data6.txt
 
     sed '/number 1/d' data6.txt
+
+    cat data7.txt
+    sed '/1/,/3/d' data7.txt
+
+    sed '/1/,/5/d' data7.txt
+
+### Inserting and appending text
+Here’s the format for doing this:
+
+    sed '[address]command\
+    new line'
+
+    echo "Test Line 2" | sed 'i\Test Line 1'
+
+    echo "Test Line 2" | sed 'a\Test Line 1'
+
+    echo "Test Line 2" | sed 'i\
+    Test Line 1'
+
+    sed '3i\
+    This is an inserted line.' data6.txt
+
+    sed '3a\
+    This is an appended line.' data6.txt
+
+    sed '$a\
+    This is a new line of text.' data6.txt
+
+    sed '1i\
+    This is one line of new text.\
+    This is another line of new text.' data6.txt
+
+### Changing lines
+
+    sed '3c\
+    This is a changed line of text.' data6.txt

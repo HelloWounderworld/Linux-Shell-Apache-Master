@@ -22,3 +22,9 @@ To terminate the gawk program, you must signal that the data stream has ended. T
 
 ### Deleting lines
 Remember that the sed editor doesn’t touch the original file. Any lines you delete are only gone from the output of the sed editor. The original file still contains the “deleted” lines.
+
+### Inserting and appending text
+
+- The insert command (i) adds a new line before the speciﬁ ed line.
+
+- The append command (a) adds a new line after the speciﬁ ed line.
