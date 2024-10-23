@@ -154,3 +154,81 @@ Here’s the format for doing this:
 
     sed '/number 3/c\
     This is a changed line of text.' data6.txt
+
+    cat data8.txt
+
+    sed '/number 1/c\
+    This is a changed line of text.' data8.txt
+
+    sed '2,3c\
+    This is a new line of text.' data6.txt
+
+### Transforming characters
+The transform command uses the format:
+
+    [address]y/inchars/outchars/
+
+    sed 'y/123/789/' data8.txt
+
+    echo "This 1 is a test of 1 try." | sed 'y/123/456/'
+
+### Printing revisited
+
+#### Printing lines
+
+    echo "this is a test" | sed 'p'
+
+    cat data6.txt
+    sed -n '/number 3/p' data6.txt
+
+    sed -n '2,3p' data6.txt
+
+    sed -n '/3/{
+    p
+    s/line/test/p
+    }' data6.txt
+
+#### Printing line numbers
+
+    cat data1.txt
+    sed '=' data1.txt
+
+    sed -n '/number 4/{
+    =
+    p
+    }' data6.txt
+
+#### Listing lines
+
+    cat data9.txt
+    sed -n 'l' data9.txt
+
+    cat data10.txt
+    sed -n 'l' data10.txt
+
+### Using files with sed
+
+#### Writing to a file
+Here’s the format for the w command:
+
+    [address]w filename
+
+The filename can be speciﬁ ed as either a relative or absolute pathname.
+
+    sed '1,2w test.txt' data6.txt
+    cat test.txt
+
+    cat data11.txt
+    sed -n '/Browncoat/w Browncoats.txt' data11.txt
+    cat Browncoats.txt
+
+#### Reading data from a file
+Here’s the format of the read command:
+
+    [address]r filename
+
+The filename parameter specifies either an absolute or relative pathname for the file that contains the data.
+
+    cat data12.txt
+
+    sed '3r data12.txt' data6.txt
