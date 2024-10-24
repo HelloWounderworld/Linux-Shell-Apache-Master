@@ -232,3 +232,12 @@ The filename parameter specifies either an absolute or relative pathname for the
     cat data12.txt
 
     sed '3r data12.txt' data6.txt
+
+    sed '/number 2/r data12.txt' data6.txt
+
+    sed '$r data12.txt' data6.txt
+
+    sed '/LIST/{
+    r data11.txt
+    d
+    }' notice.std
