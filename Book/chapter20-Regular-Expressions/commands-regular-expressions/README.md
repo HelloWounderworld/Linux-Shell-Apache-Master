@@ -82,4 +82,101 @@ If you position the caret character in any place other than at the beginning of 
 TIP: If you need to specify a regular expression pattern using only the caret character, you don’t need to escape it with a backslash. However, if you specify the caret character first, followed by additional text in the pattern, you need to use the escape character before the caret character.
 
 ### Looking for the ending
+The dollar sign ($) special character defines the end anchor. Add this special character after a text pattern to indicate that the line of data must end with the text pattern:
 
+    echo "This is a good book" | sed -n '/book$/p'
+
+    echo "This book is good" | sed -n '/book$/p'
+
+The problem with an ending text pattern is that you must be careful what you’re looking for:
+
+    echo "There are a lot of good books" | sed -n '/book$/p'
+
+    echo "There are a lot of good books" | sed -n '/books$/p'
+
+### Combining anchors
+
+    sed -n '/^this is a test$/p' data4.txt
+
+    sed -n '/^[[:space:]]*this is a test[[:space:]]*$/p' data4.txt
+
+    sed '/^$/d' data5.txt
+
+    sed '/^[[:space:]]*[[:space:]]*$/d' data5.txt
+
+## The dot character
+The dot special character is used to match any single character except a newline character. The dot character must match a character, however; if there’s no character in the place of the dot, then the pattern fails.
+
+    sed -n '/.at/p' data6.txt
+
+## Character classes
+You can define a class of characters that would match a position in a text pattern. If one of the characters from the character class is in the data stream, it matches the pattern.
+
+    sed -n '/[ch]at/p' data6.txt
+
+Character classes come in handy if you’re not sure which case a character is in:
+
+    echo "Yes" | sed -n '/[Yy]es/p'
+
+    echo "yes" | sed -n '/[Yy]es/p'
+
+You can use more than one character class in a single expression:
+
+    echo "Yes" | sed -n '/[Yy][Ee][Ss]/p'
+
+    echo "yEs" | sed -n '/[Yy][Ee][Ss]/p'
+
+    echo "yeS" | sed -n '/[Yy][Ee][Ss]/p'
+
+Character classes don’t have to contain just letters; you can use numbers in them as well:
+
+    sed -n '/[0123]/p' data7.txt
+
+You can combine character classes to check for properly formatted numbers, such as phone numbers and ZIP codes. However, when you’re trying to match a speciﬁ c format, you must be careful. Here’s an example of a ZIP code match gone wrong:
+
+    sed -n '
+    /[0123456789][0123456789][0123456789][0123456789][0123456789]/p
+    ' data8.txt
+
+If you want to ensure that you match against only five numbers, you need to delineate them somehow, either with spaces, or as in this example, by showing that they’re at the start and end of the line:
+
+    sed -n '
+    /^[[:space:]]*[0123456789][0123456789][0123456789][0123456789][0123456789][[:space:]]*$/p
+    ' data8.txt
+
+One extremely popular use for character classes is parsing words that might be misspelled, such as data entered from a user form. You can easily create regular expressions that can accept common misspellings in data:
+
+    sed -n '
+    /maint[ea]n[ae]nce/p
+    /sep[ea]r[ea]te/p
+    ' data9.txt
+
+## Negating character classes
+In regular expression patterns, you can also reverse the effect of a character class. Instead of looking for a character contained in the class, you can look for any character that’s not in the class. To do that, just place a caret character at the beginning of the character class range:
+
+    sed -n '/[^ch]at/p' data6.txt
+
+## Using ranges
+You can use a range of characters within a character class by using the dash symbol. Just specify the first character in the range, a dash, and then the last character in the range. The regular expression includes any character that’s within the specified character range, according to the character set used by the Linux system (see Chapter 2).
+
+    sed -n '/^[[:space:]]*[0-9][0-9][0-9][0-9][0-9][[:space:]]*$/p' data8.txt
+
+That saved lots of typing! Each character class matches any digit from 0 to 9. The pattern fails if a letter is present anywhere in the data:
+
+    echo "a8392" | sed -n '/^[[:space:]]*[0-9][0-9][0-9][0-9][0-9][[:space:]]*$/p'
+
+    echo "1839a" | sed -n '/^[[:space:]]*[0-9][0-9][0-9][0-9][0-9][[:space:]]*$/p'
+
+    echo "18a92" | sed -n '/^[[:space:]]*[0-9][0-9][0-9][0-9][0-9][[:space:]]*$/p'
+
+The same technique works with letters:
+
+    sed -n '/[c-h]at/p' data6.txt
+
+You can also specify multiple, non-continuous ranges in a single character class:
+
+    sed -n '/[a-ch-m]at/p' data6
+
+The character class allows the ranges a through c, and h through m to appear before the at text. This range would reject any letters between d and g:
+
+    echo "I'm getting too fat." | sed -n '/[a-ch-m]at/p'
