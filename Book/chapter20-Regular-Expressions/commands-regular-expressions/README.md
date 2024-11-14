@@ -175,8 +175,194 @@ The same technique works with letters:
 
 You can also specify multiple, non-continuous ranges in a single character class:
 
-    sed -n '/[a-ch-m]at/p' data6
+    sed -n '/[a-ch-m]at/p' data6.txt # [a-ch-m] <=> [a-c]U[h-m], where [a-c] and [h-m] are interval.
 
 The character class allows the ranges a through c, and h through m to appear before the at text. This range would reject any letters between d and g:
 
     echo "I'm getting too fat." | sed -n '/[a-ch-m]at/p'
+
+## Special character classes
+
+    echo "abc" | sed -n '/[[:digit:]]/p'
+
+    echo "abc" | sed -n '/[[:alpha:]]/p'
+
+    echo "abc123" | sed -n '/[[:digit:]]/p'
+
+    echo "This is, a test" | sed -n '/[[:punct:]]/p'
+
+    echo "This is a test" | sed -n '/[[:punct:]]/p'
+
+## The asterisk
+Placing an asterisk after a character signifies that the character must appear zero or more times in the text to match the pattern:
+
+    echo "ik" | sed -n '/ie*k/p'
+
+    echo "iek" | sed -n '/ie*k/p'
+
+    echo "ieek" | sed -n '/ie*k/p'
+
+    echo "ieeek" | sed -n '/ie*k/p'echo "ieeeek" | sed -n '/ie*k/p'
+
+This pattern symbol is commonly used for handling words that have a common misspelling or variations in language spellings
+
+    echo "I'm getting a color TV" | sed -n '/colou*r/p'
+
+    echo "I'm getting a colour TV" | sed -n '/colou*r/p'
+
+If you know of a word that is commonly misspelled, you can accommodate it by using the asterisk:
+
+    echo "I ate a potatoe with my lunch." | sed -n '/potatoe*/p'
+
+    echo "I ate a potato with my lunch." | sed -n '/potatoe*/p'
+
+Another handy feature is combining the dot special character with the asterisk special character. This combination provides a pattern to match any number of any characters. It’s often used between two text strings that may or may not appear next to each other in the data stream:
+
+    echo "this is a regular pattern expression" | sed -n '
+    /regular.*expression/p'
+
+The asterisk can also be applied to a character class. This allows you to specify a group or range of characters that can appear more than once in the text:
+
+    echo "bt" | sed -n '/b[ae]*t/p'
+
+    echo "bat" | sed -n '/b[ae]*t/p'
+
+    echo "bet" | sed -n '/b[ae]*t/p'
+
+    echo "btt" | sed -n '/b[ae]*t/p'
+
+    echo "baat" | sed -n '/b[ae]*t/p'
+
+    echo "baaeeet" | sed -n '/b[ae]*t/p'
+
+    echo "baeeaeeat" | sed -n '/b[ae]*t/p'
+
+    echo "baakeeet" | sed -n '/b[ae]*t/p'
+
+    echo "btaakeeet" | sed -n '/b[ae]*t/p'
+
+## Extended Regular Expressions
+
+CAUTION: Remember that the regular expression engines in the sed editor and the gawk program are different. The gawk program can use most of the extended regular expression pattern symbols, and it can provide some additional filtering capabilities that the sed editor doesn’t have. However, because of this, it is often slower in processing data streams.
+
+### The question mark
+The question mark is similar to the asterisk, but with a slight twist. The question mark indicates that the preceding character can appear zero or one time, but that’s all. It doesn’t match repeating occurrences of the character:
+
+    echo "bt" | gawk '/be?t/{print $0}'
+
+    echo "bet" | gawk '/be?t/{print $0}'
+
+    echo "beet" | gawk '/be?t/{print $0}'
+
+    echo "beeet" | gawk '/be?t/{print $0}'
+
+As with the asterisk, you can use the question mark symbol along with a character class:
+
+    echo "bt" | gawk '/b[ae]?t/{print $0}'
+
+    echo "bat" | gawk '/b[ae]?t/{print $0}'
+
+    echo "bot" | gawk '/b[ae]?t/{print $0}'
+
+    echo "bet" | gawk '/b[ae]?t/{print $0}'
+
+    echo "baet" | gawk '/b[ae]?t/{print $0}'
+
+    echo "beat" | gawk '/b[ae]?t/{print $0}'
+
+    echo "beet" | gawk '/b[ae]?t/{print $0}'
+
+### The plus sign
+The plus sign indicates that the preceding character can appear one or more times, but must be present at least once. The pattern doesn’t match if the character is not present:
+
+    echo "beeet" | gawk '/be+t/{print $0}'
+
+    echo "beet" | gawk '/be+t/{print $0}'
+
+    echo "bet" | gawk '/be+t/{print $0}'
+
+    echo "bt" | gawk '/be+t/{print $0}'
+
+The plus sign also works with character classes, the same way as the asterisk and question mark do:
+
+    echo "bt" | gawk '/b[ae]+t/{print $0}'
+
+    echo "bat" | gawk '/b[ae]+t/{print $0}'
+
+    echo "bot" | gawk '/b[ae]+t/{print $0}'
+
+    echo "bet" | gawk '/b[ae]+t/{print $0}'
+
+    echo "beat" | gawk '/b[ae]+t/{print $0}'
+
+    echo "beet" | gawk '/b[ae]+t/{print $0}'
+
+    echo "beeat" | gawk '/b[ae]+t/{print $0}'
+
+### Using braces
+
+CAUTION: By default, the gawk program doesn’t recognize regular expression intervals. You must specify the --re-interval command line option for the gawk program to recognize regular expression intervals.
+
+Here’s an example of using a simple interval of one value:
+
+    echo "bt" | gawk --re-interval '/be{1}t/{print $0}'
+
+    echo "bet" | gawk --re-interval '/be{1}t/{print $0}'
+
+    echo "beet" | gawk --re-interval '/be{1}t/{print $0}'
+
+Often, specifying the lower and upper limit comes in handy:
+
+    echo "bt" | gawk --re-interval '/be{1,2}t/{print $0}'
+
+    echo "bet" | gawk --re-interval '/be{1,2}t/{print $0}'
+
+    echo "beet" | gawk --re-interval '/be{1,2}t/{print $0}'
+
+    echo "beet" | gawk --re-interval '/be{2,2}t/{print $0}'
+
+    echo "beeet" | gawk --re-interval '/be{1,2}t/{print $0}'
+
+The interval pattern match also applies to character classes:
+
+    echo "bt" | gawk --re-interval '/b[ae]{1,2}t/{print $0}'
+
+    echo "bat" | gawk --re-interval '/b[ae]{1,2}t/{print $0}'
+
+    echo "bet" | gawk --re-interval '/b[ae]{1,2}t/{print $0}'
+
+    echo "beat" | gawk --re-interval '/b[ae]{1,2}t/{print $0}'
+
+    echo "beet" | gawk --re-interval '/b[ae]{1,2}t/{print $0}'
+
+    echo "beeat" | gawk --re-interval '/b[ae]{1,2}t/{print $0}'
+
+    echo "baeet" | gawk --re-interval '/b[ae]{1,2}t/{print $0}'
+    
+    echo "baeaet" | gawk --re-interval '/b[ae]{1,2}t/{print $0}'
+
+### The pipe symbol
+Here’s the format for using the pipe symbol:
+
+    expr1|expr2|...
+
+Here’s an example of this:
+
+    echo "The cat is asleep" | gawk '/cat|dog/{print $0}'
+
+    echo "The dog is asleep" | gawk '/cat|dog/{print $0}'
+
+    echo "The sheep is asleep" | gawk '/cat|dog/{print $0}'
+
+The regular expressions on either side of the pipe symbol can use any regular expression pattern, including character classes, to define the text:
+
+    echo "He has a hat." | gawk '/[ch]at|dog/{print $0}'
+
+### Grouping expressions
+Regular expression patterns can also be grouped by using parentheses. When you group a regular expression pattern, the group is treated like a standard character. You can apply a special character to the group just as you would to a regular character:
+
+    echo "Sat" | gawk '/Sat(urday)?/{print $0}'
+
+    echo "Saturday" | gawk '/Sat(urday)?/{print $0}'
+
+It’s common to use grouping along with the pipe symbol to create groups of possible pattern matches:
