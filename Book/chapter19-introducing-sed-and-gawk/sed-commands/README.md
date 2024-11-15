@@ -241,3 +241,7 @@ The filename parameter specifies either an absolute or relative pathname for the
     r data11.txt
     d
     }' notice.std
+
+### If you want that the changes occurs directly at the file you have to use "-i"
+
+    sed -i '/^[[:space:]]*$/d' data13.txt
