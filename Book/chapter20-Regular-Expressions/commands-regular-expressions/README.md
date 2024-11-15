@@ -366,3 +366,50 @@ Regular expression patterns can also be grouped by using parentheses. When you g
     echo "Saturday" | gawk '/Sat(urday)?/{print $0}'
 
 It’s common to use grouping along with the pipe symbol to create groups of possible pattern matches:
+
+    echo "cat" | gawk '/(c|b)a(b|t)/{print $0}'
+
+    echo "cab" | gawk '/(c|b)a(b|t)/{print $0}'
+
+    echo "bat" | gawk '/(c|b)a(b|t)/{print $0}'
+
+    echo "bab" | gawk '/(c|b)a(b|t)/{print $0}'
+
+    echo "tab" | gawk '/(c|b)a(b|t)/{print $0}'
+
+## Regular Expressions in Action
+
+### Counting directory files
+Your PATH environment variable will differ, depending on where the applications are located on your Linux system. The key is to recognize that each directory in the PATH is separated by a colon. To get a listing of directories that you can use in a script, you must replace each colon with a space. You now recognize that the sed editor can do just that using a simple regular expression:
+
+    echo $PATH | sed 's/:/ /g'
+
+After you have the directories separated out, you can use them in a standard for statement (see Chapter 13) to iterate through each directory:
+
+    sudo chmod +x countfiles.sh
+
+    ./countfiles.sh
+
+### Validating a phone number
+Putting the entire pattern together results in this:
+
+    ^\(?[2-9][0-9]{2}\)?(| |-|\.)[0-9]{3}( |-|\.)[0-9]{4}$
+
+Although you can’t tell from this listing, the gawk command is on a single line in the shell script. You can then redirect phone numbers to the script for processing:
+
+    echo "317-555-1234" | ./isphone.sh
+
+    echo "000-555-1234" | ./isphone.sh
+
+    echo "312 555-1234" | ./isphone.sh
+
+Or you can redirect an entire file of phone numbers to ﬁ lter out the invalid ones:
+
+    cat phonelist.txt | ./isphone.sh
+
+### Parsing an e-mail address
+These days, e-mail has become a crucial form of communication. Trying to validate e-mail addresses has become quite a challenge for script builders because of the myriad ways to create an e-mail address. This is the basic form of an e-mail address:
+
+    username@hostname
+
+
