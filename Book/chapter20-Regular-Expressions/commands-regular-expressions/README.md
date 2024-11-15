@@ -412,4 +412,26 @@ These days, e-mail has become a crucial form of communication. Trying to validat
 
     username@hostname
 
+Putting the entire pattern together results in the following:
 
+    ^([a-zA-Z0-9_\-\.\+]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$
+
+This pattern filters out poorly formatted e-mail addresses from a data list. Now you can create your script to implement the regular expression:
+
+    echo "rich@here.now" | ./isemail.sh
+
+    echo "rich@here.now." | ./isemail.sh
+
+    echo "rich@here.n" | ./isemail.sh
+
+    echo "rich@here-now" | ./isemail.sh
+
+    echo "rich.blum@here.now" | ./isemail.sh
+
+    echo "rich_blum@here.now" | ./isemail.sh
+
+    echo "rich/blum@here.now" | ./isemail.sh
+
+    echo "rich#blum@here.now" | ./isemail.sh
+
+    echo "rich*blum@here.now" | ./isemail.sh
