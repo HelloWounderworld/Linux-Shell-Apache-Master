@@ -3,11 +3,11 @@ Interactive shell scripts have a reputation for being dull and boring. You can c
 
 The menu command allows you to paint a menu, using the standard echo command, and read a response from the user, using the read command. The case command then selects the appropriate shell script function based on the value entered.
 
-The dialog program provides several prebuilt text widgets for creating Windows-like objects on a text-based terminal emulator. You can create dialog boxes for displaying text, entering text, and choosing ﬁles and dates by using the dialog program. This helps bring even more life to your shell script.
+The dialog program provides several prebuilt text widgets for creating Windows-like objects on a text-based terminal emulator. You can create dialog boxes for displaying text, entering text, and choosing files and dates by using the dialog program. This helps bring even more life to your shell script.
 
 If you’re running your shell scripts in a graphical X Window environment, you can utilize even more tools in your interactive scripts. For the KDE desktop, there’s the kdialog program. This program provides simple commands to create windows widgets for all the basic windows functions. For the GNOME desktop, there are the gdialog and zenity programs. Each of these programs provides window widgets that blend into the GNOME desktop just like a real Windows application.
 
-The next chapter dives into the subject of editing and manipulating text data ﬁles. Often the biggest use of shell scripts revolves around parsing and displaying data in text ﬁles such as log and error ﬁles. The Linux environment includes two very useful tools, sed and gawk , for working with text data in your shell scripts. The next chapter introduces you to these tools, and shows the basics of how to use them.
+The next chapter dives into the subject of editing and manipulating text data files. Often the biggest use of shell scripts revolves around parsing and displaying data in text files such as log and error files. The Linux environment includes two very useful tools, sed and gawk , for working with text data in your shell scripts. The next chapter introduces you to these tools, and shows the basics of how to use them.
 
 ## Key point
 

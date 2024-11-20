@@ -2,7 +2,7 @@
 A regular expression is a pattern template you define that a Linux utility uses to filter text. A Linux utility (such as the sed editor or the gawk program) matches the regular expression pattern against data as that data flows into the utility. If the data matches the pattern, it’s accepted for processing. If the data doesn’t match the pattern, it’s rejected.
 
 ## Types of regular expressions
-The asterisk wildcard character allows you to list only ﬁ les that match a certain criteria. For example:
+The asterisk wildcard character allows you to list only files that match a certain criteria. For example:
 
     ls -al da*
 
@@ -132,7 +132,7 @@ Character classes don’t have to contain just letters; you can use numbers in t
 
     sed -n '/[0123]/p' data7.txt
 
-You can combine character classes to check for properly formatted numbers, such as phone numbers and ZIP codes. However, when you’re trying to match a speciﬁ c format, you must be careful. Here’s an example of a ZIP code match gone wrong:
+You can combine character classes to check for properly formatted numbers, such as phone numbers and ZIP codes. However, when you’re trying to match a specific format, you must be careful. Here’s an example of a ZIP code match gone wrong:
 
     sed -n '
     /[0123456789][0123456789][0123456789][0123456789][0123456789]/p
@@ -403,7 +403,7 @@ Although you can’t tell from this listing, the gawk command is on a single lin
 
     echo "312 555-1234" | ./isphone.sh
 
-Or you can redirect an entire file of phone numbers to ﬁ lter out the invalid ones:
+Or you can redirect an entire file of phone numbers to filter out the invalid ones:
 
     cat phonelist.txt | ./isphone.sh
 

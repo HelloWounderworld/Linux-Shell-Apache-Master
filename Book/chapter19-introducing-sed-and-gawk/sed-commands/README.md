@@ -213,7 +213,7 @@ Here’s the format for the w command:
 
     [address]w filename
 
-The filename can be speciﬁ ed as either a relative or absolute pathname.
+The filename can be specified as either a relative or absolute pathname.
 
     sed '1,2w test.txt' data6.txt
     cat test.txt

@@ -1,5 +1,5 @@
 # Advanced Gawk
-This chapter walked you through the more advanced features of the gawk programming language. Every programming language requires using variables, and gawk is no different. The gawk programming language includes some built-in variables that you can use to reference speciﬁc data field values and retrieve information about the number of data fields and records processed in the data file. You can also create your own variables for use in your scripts.
+This chapter walked you through the more advanced features of the gawk programming language. Every programming language requires using variables, and gawk is no different. The gawk programming language includes some built-in variables that you can use to reference specific data field values and retrieve information about the number of data fields and records processed in the data file. You can also create your own variables for use in your scripts.
 
 The gawk programming language also provides many of the standard structured commands you expect from a programming language. You can easily create fancy programs using if-then logic and while, do-while, and for loops. Each of these commands allows you to alter the flow of your gawk program script to iterate through data field values to create detailed data reports.
 

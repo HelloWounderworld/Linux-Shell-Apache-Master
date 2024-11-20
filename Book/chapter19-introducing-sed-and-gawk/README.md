@@ -25,6 +25,6 @@ Remember that the sed editor doesn’t touch the original file. Any lines you de
 
 ### Inserting and appending text
 
-- The insert command (i) adds a new line before the speciﬁ ed line.
+- The insert command (i) adds a new line before the specified line.
 
-- The append command (a) adds a new line after the speciﬁ ed line.
+- The append command (a) adds a new line after the specified line.

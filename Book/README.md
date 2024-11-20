@@ -20,3 +20,7 @@ Existem casos em que quando vc copia e cola um determinado arquivo shell script,
     dos2unix nomedoarquivo.sh
 
 Isso ira permitir que seja encontrado o arquivo que foi enviado.
+
+#### TIP characters
+
+    ﬁ
