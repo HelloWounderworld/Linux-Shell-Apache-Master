@@ -104,3 +104,45 @@ It prints only the first line in a multiline pattern space. This includes all ch
     sed -n 'N ; /System[[:cntrl:]]*Administrator/P' data3.txt # The format that it worked
 
 ## Holding Space
+The sed editor utilizes another buffer area called the hold space. You can use the hold space to temporarily hold lines of text while working on other lines in the pattern space. The five commands associated with operating with the hold space are shown below:
+
+- h: Copies pattern space to hold space
+
+- H: Appends pattern space to hold space
+
+- g: Copies hold space to pattern space
+
+- G: Appends hold space to pattern space
+
+- x: Exchanges contents of pattern and hold spaces
+
+These commands let you copy text from the pattern space to the hold space. This frees up the pattern space to load another string for processing.
+
+With two buffer areas, trying to determine what line of text is in which buffer area can sometimes get confusing. Here’s a short example that demonstrates how to use the h and g commands to move data back and forth between the sed editor buffer spaces:
+
+    sed -n '/first/ {h ; p ; n ; p ; g ; p }' data2.txt
+
+Look at the preceding code example step by step:
+
+1. The sed script uses a regular expression in the address to filter the line containing the word first.
+
+1. When the line containing the word first appears, the initial command in {}, the h command, places the line in the hold space.
+
+1. The next command, the p command, prints the contents of the pattern space, which is still the first data line.
+
+1. The n command retrieves the next line in the data stream (This is the second data line) and places it in the pattern space.
+
+1. The p command prints the contents of the pattern space, which is now the second data line.
+
+1. The g command places the contents of the hold space (This is the first data line) back into the pattern space, replacing the current text.
+
+1. The p command prints the current contents of the pattern space, which is now back to the first data line.
+
+After explanation above, you can understand what is going to happen the following command below
+
+    sed -n '/first/ {h ; n ; p ; g ; p }' data2.txt
+
+## Negating a Command
+The exclamation mark command (!) is used to negate a command. This means in situations where the command would normally have been activated, it isn’t. Here’s an example demonstrating this feature:
+
+    sed -n '/header/!p' data2.txt
