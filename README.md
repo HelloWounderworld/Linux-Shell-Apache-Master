@@ -12,3 +12,7 @@ Para o estudo seguirei as seguintes referências
 - Apache The Definitive Guide
 
 Lembrando que esse repositório está destinado à um longo processo meu de estudo sobre Linux Shell e Infraestrutura que durará anos e anos. Logo, as edições das referências acima podem estar se atualizando conforme o andamento e as novidades que vem com tempo.
+
+### About screen:
+
+    https://linuxize.com/post/how-to-use-linux-screen/
