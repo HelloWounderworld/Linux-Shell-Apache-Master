@@ -146,3 +146,13 @@ After explanation above, you can understand what is going to happen the followin
 The exclamation mark command (!) is used to negate a command. This means in situations where the command would normally have been activated, it isn’t. Here’s an example demonstrating this feature:
 
     sed -n '/header/!p' data2.txt
+
+    sed 'N;
+    s/System\nAdministrator/Desktop\nUser/
+    s/System Administrator/Desktop User/
+    ' data4.txt
+
+    sed '$!N;
+    s/System\nAdministrator/Desktop\nUser/
+    s/System Administrator/Desktop User/
+    ' data4.txt
