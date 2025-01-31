@@ -156,3 +156,52 @@ The exclamation mark command (!) is used to negate a command. This means in situ
     s/System\nAdministrator/Desktop\nUser/
     s/System Administrator/Desktop User/
     ' data4.txt
+
+The pattern you need to work with goes like this:
+
+1. Place a line in the pattern space.
+
+1. Place the line from the pattern space to the hold space.
+
+1. Put the next line of text in the pattern space.
+
+1. Append the hold space to the pattern space.
+
+1. Place everything in the pattern space into the hold space.
+
+1. Repeat Steps 3 through 5 until you’ve put all the lines in reverse order in the hold space.
+
+1. Retrieve the lines, and print them.
+
+When using this technique, you do not want to print lines as they are processed. This means using the -n command line option for sed. The next thing to determine is how to append the hold space text to the pattern space text. This is done by using the G command. The only problem is that you don’t want to append the hold space to the ﬁ rst line of text processed. This is easily solved by using the exclamation mark command:
+
+    1!G
+
+The next step is to place the new pattern space (the text line with the appended reverse lines) into the hold space. This is simple enough; just use the h command.
+
+When you’ve got the entire data stream in the pattern space in reverse order, you just need to print the results. You know you have the entire data stream in the pattern space when you’ve reached the last line in the data stream. To print the results, just use the following command:
+
+    $p
+
+    cat data2.txt
+
+    sed -n '{1!G ; h ; $p }' data2.txt
+
+In case you’re wondering, a bash shell command can perform the function of reversing a text file. The "tac" command displays a text file in reverse order. You probably noticed the clever name of the command because it performs the reverse function of the cat command.
+
+## Changing the Flow
+
+### Branching
+Here’s the format of the branch command:
+
+    [address]b [label]
+
+The "address" parameter determines which line or lines of data trigger the "branch" command. The label parameter defines the location to branch to. If the "label" parameter is not present, the "branch" command proceeds to the end of the script.
+
+    cat data2.txt
+
+    sed '{2,3b ; s/This is/Is this/ ; s/line./test?/}' data2.txt
+
+Instead of going to the end of the script, you can define a label for the branch command to jump to. Labels start with a colon and can be up to seven characters in length:
+
+    :label2
