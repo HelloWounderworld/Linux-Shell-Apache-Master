@@ -205,3 +205,119 @@ The "address" parameter determines which line or lines of data trigger the "bran
 Instead of going to the end of the script, you can define a label for the branch command to jump to. Labels start with a colon and can be up to seven characters in length:
 
     :label2
+
+    sed '{/first/b jump1 ; s/This is the/No jump on/
+    :jump1
+    s/This is the/Jump here on/}' data2.txt
+
+    echo "This, is, a, test, to, remove, commas." | sed -n '{
+    :start
+    s/,//1p
+    b start
+    }'
+
+Each script iteration removes the ﬁ rst occurrence of a comma from the text string and prints the string. There’s one catch to this script: It never ends. This situation creates an endless loop, searching for commas until you manually stop it by sending a signal with the Ctrl+C key combination.
+
+    echo "This, is, a, test, to, remove, commas." | sed -n '{
+    :start
+    s/,//1p
+    /,/b start
+    }'
+
+### Testing
+Similar to the branch command, the test command (t) is also used to modify the flow of the sed editor script. Instead of jumping to a label based on an address, the test command jumps to a label based on the outcome of a substitution command.
+
+The test command uses the same format as the branch command:
+
+    [address]t [label]
+
+The test command provides a cheap way to perform a basic if-then statement on the text in the data stream. For example, if you don’t need to make a substitution if another substitution was made, the test command can help:
+
+    sed '{
+    s/first/matched/
+    t
+    s/This is the/No match on/
+    }' data2.txt
+
+Using the test command, you can clean up the loop you tried using the branch command:
+
+    echo "This, is, a, test, to, remove, commas. " | sed -n '{
+    :start
+    s/,//1p
+    t start
+    }'
+
+## Replacing via a Pattern
+You’ve seen how to use patterns in the sed commands to replace text in the data stream. However, when using wildcard characters it’s not easy to know exactly what text will match the pattern.
+
+    echo "The cat sleeps in his hat." | sed 's/cat/"cat"/'
+
+But what if you use a wildcard character (.) in the pattern to match more than one word?
+
+    echo "The cat sleeps in his hat." | sed 's/.at/".at"/g'
+
+### Using the ampersand
+This lets you manipulate whatever word matches the pattern defined:
+
+    echo "The cat sleeps in his hat." | sed 's/.at/"&"/g'
+
+When the pattern matches the word cat, “cat” appears in the substituted word. When it matches the word hat, “hat” appears in the substituted word.
+
+### Replacing individual words
+The ampersand symbol retrieves the entire string that matches the pattern you specify in the substitution command. Sometimes, you’ll only want to retrieve a subset of the string. You can do that, too, but it’s a little tricky.
+
+The sed editor uses parentheses to deﬁ ne a substring component within the substitution pattern.
+
+When you use parentheses in the substitution command, you must use the escape character to identify them as grouping characters and not normal parentheses. This is the reverse of when you escape other special characters.
+
+    echo "The System Administrator manual" | sed '
+    s/\(System\) Administrator/\1 User/'
+
+This "substitution" command uses one set of parentheses around the word "System" identifying it as a substring component.
+
+If you need to replace a phrase with just a single word, that’s a substring of the phrase, but that substring just happens to be using a wildcard character; using substring components is a lifesaver:
+
+    echo "That furry cat is pretty" | sed 's/furry \(.at\)/\1/'
+
+    echo "That furry hat is pretty" | sed 's/furry \(.at\)/\1/'
+
+This feature can be especially helpful when you need to insert text between two or more substring components. Here’s a script that uses substring components to insert a comma in long numbers:
+
+    echo "1234567" | sed '{
+    :start
+    s/\(.*[0-9]\)\([0-9]\{3\}\)/\1,\2/
+    t start
+    }'
+
+The script divides the matching pattern into two components:
+
+    .*[0-9]
+    [0-9]{3}
+
+## Placing sed Commands in Scripts
+
+### Using wrappers
+Once inside the shell script, you can use normal shell variables and parameters with your sed editor scripts. Here’s an example of using the command line parameter variable as the input to a sed script:
+
+    ./reverse.sh data2.txt
+
+### Redirecting sed output
+You can use dollar sign/parenthesis, $(), to redirect the output of your sed editor command to a variable for use later in the script. The following is an example of using the sed script to add commas to the result of a numeric computation:
+
+    ./fact.sh 20
+
+## Creating sed Utilities
+
+### Spacing with double lines
+To start things off, look at a simple sed script to insert a blank line between lines in a text file:
+
+    sed 'G' data2.txt
+
+You may have noticed that this script also adds a blank line to the last line in the data stream, producing a blank line at the end of the ﬁ le. If you want to get rid of this, you can use the negate symbol and the last line symbol to ensure that the script doesn’t add the blank line to the last line of the data stream
+
+    sed '$!G' data2.txt
+
+### Spacing files that may have blanks
+To take double spacing one step further, what if the text file already has a few blank lines, but you want to double space all the lines? If you use the previous script, you’ll get some areas that have too many blank lines, because each existing blank line gets doubled:
+
+    sed '$!G' data6.txt
