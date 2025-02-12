@@ -321,3 +321,83 @@ You may have noticed that this script also adds a blank line to the last line in
 To take double spacing one step further, what if the text file already has a few blank lines, but you want to double space all the lines? If you use the previous script, you’ll get some areas that have too many blank lines, because each existing blank line gets doubled:
 
     sed '$!G' data6.txt
+
+Now you have three blank lines where the original blank line was located. The solution to this problem is to ﬁ rst delete any blank lines from the data stream and then use the G command to insert new blank lines after all the lines. To delete existing blank lines, you just need to use the d command with a pattern that matches a blank line:
+
+    /^$/d or ^[[:space:]]*$/d
+
+    sed '/^$/d ; $!G' data6.txt
+
+Obs: It seems that the command above doen't work in Ubuntu 22.04...
+
+To the Ubuntu 22.04 is the following command below
+
+    sed -e '/^[[:space:]]*$/d' -e '$!G' data6.txt
+
+### Numbering lines in a file
+You can pipe the output to another sed editor script that uses the N command to combine the two lines. You also need to use the substitution command to replace the newline character with either a space or a tab character. Here’s what the ﬁ nal solution looks like:
+
+    sed '=' data2.txt | sed 'N; s/\n/ /'
+
+There are bash shell commands that can also add line numbers. However, they add some additional (and potentially unwanted spacing):
+
+    nl data2.txt
+
+    cat -n data2.txt
+
+### Printing last lines
+The dollar sign represents the last line of a data stream, so it’s easy to display just the last line:
+
+    sed -n '$p' data2.txt
+
+Now how can you use the dollar sign symbol to display a set number of lines at the end of the data stream? The answer is to create a rolling window.
+
+    sed '{
+    :start
+    $q ; N ; 11,$D
+    b start
+    }' data7.txt
+
+### Deleting lines
+
+#### Deleting consecutive blank lines
+It can be a nuisance when extra blank lines crop up in data ﬁ les. Often you have a data file that contains blank lines, but sometimes a data line is missing and produces too many blank lines (as you saw in the double-spacing example earlier).
+
+Here’s the script to do this:
+
+    /./,/^$/!d
+
+    sed '/./,/^$/!d' data8.txt
+
+#### Deleting leading blank lines
+Removing blank lines from the top of a data stream is not a difficult task. Here’s the script that accomplishes that function:
+
+    /./,$!d
+
+    sed '/./,$!d' data9.txt or sed '/\S/,$!d' data9.txt
+
+#### Deleting trailing blank lines
+Unfortunately, deleting trailing blank lines is not as simple as deleting leading blank lines. Just like printing the end of a data stream, deleting blank lines at the end of a data stream requires a little ingenuity and looping.
+
+    sed '{ :start /^\n*$/{$d ; N ; b start } }' data10.txt
+
+or 
+
+    sed ':a;/^[\n[:space:]]*$/{$d;N;ba}' data10.txt
+
+### Removing HTML tags
+A standard HTML web page contains several different types of HTML tags, identifying formatting features required to properly display the page information. Here’s a sample of what an HTML file looks like:
+
+Removing HTML tags creates a problem, however, if you’re not careful. At first glance, you’d think that the way to remove HTML tags would be to just look for a text string that starts with a less-than symbol (<), ends with a greater-than symbol (>), and has data in between the symbols:
+
+    s/<.*>//g
+
+    sed 's/<.*>//g' data11.txt
+
+    s/<[^>]*>//g
+
+    sed 's/<[^>]*>//g' data11.txt
+
+That’s a little better. To clean things up some, you can add a delete command to get rid of those pesky blank lines:
+
+    sed 's/<[^>]*>//g ; /^$/d' data11.txt or sed -e 's/<[^>]*>//g' -e '/^[[:space:]]*$/d' data11.txt
