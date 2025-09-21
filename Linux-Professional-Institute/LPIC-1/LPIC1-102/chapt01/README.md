@@ -1,0 +1,1 @@
+# Personalizar e trabalhar no ambiente shell

@@ -1,0 +1,1 @@
+# Identificar e editar configurações de hardware
