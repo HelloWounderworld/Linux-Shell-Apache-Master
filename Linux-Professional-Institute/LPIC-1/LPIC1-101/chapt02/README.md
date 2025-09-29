@@ -1,0 +1,1 @@
+# Início (boot) do sistema
