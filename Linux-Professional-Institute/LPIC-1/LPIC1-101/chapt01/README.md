@@ -20,6 +20,8 @@ Anotacoes das duvidas que eu tirei com o chat conforme a abordagem do assunto.
 
         lspci -s <ID> -k
 
+        lspci -nn
+
 - lsusb
 
         lsusb
@@ -33,6 +35,20 @@ Anotacoes das duvidas que eu tirei com o chat conforme a abordagem do assunto.
         lsusb -s <Bus:Dev>
 
         lsusb -v -s <Bus:Dev>
+
+- kmod
+
+        lsmod
+
+        lsmod | fgrep -i <Module Name>
+
+- modprobe
+
+        modprobe -r <Module Name> # Be careful, this command will stop a kernel module process
+
+- modinfo
+
+        modinfo -p <Module Name> # When you'd like to check every information about a specific module
 
 - duvida02
 
