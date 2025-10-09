@@ -8,3 +8,11 @@ A linha a seguir faz parte da saída gerada pelo comando lspci:
 Qual comando deve ser executado para identificar o módulo do kernel em uso neste dispositivo específico?
 
 ## Resposta
+
+O comando para identificar o modulo kernel deste dispositivo eh
+
+    lspci -s 03:00.0 -v
+
+ou
+
+    lspci -s 03:00.0 -k

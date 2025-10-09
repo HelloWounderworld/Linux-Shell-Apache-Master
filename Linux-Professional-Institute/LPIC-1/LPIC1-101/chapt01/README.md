@@ -46,6 +46,10 @@ Anotacoes das duvidas que eu tirei com o chat conforme a abordagem do assunto.
 
         modprobe -r <Module Name> # Be careful, this command will stop a kernel module process
 
+        sudo modprobe <nome_do_modulo> # Carregando manualmente o modulo
+
+        sudo insmod /path/to/driver.ko # Caso o arquivo .ko estiver fora dos caminhos padrão
+
 - modinfo
 
         modinfo -p <Module Name> # When you'd like to check every information about a specific module
