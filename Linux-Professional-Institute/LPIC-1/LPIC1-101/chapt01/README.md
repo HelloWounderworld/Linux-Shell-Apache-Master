@@ -12,6 +12,28 @@ Anotacoes das duvidas que eu tirei com o chat conforme a abordagem do assunto.
 
 #### Comandos para inspeção
 
+- lspci
+
+        lspci
+
+        lspci -s <ID> -v
+
+        lspci -s <ID> -k
+
+- lsusb
+
+        lsusb
+        
+        lsusb -d <ID>
+
+        lsusb -v -d <ID>
+
+        lsusb -t
+
+        lsusb -s <Bus:Dev>
+
+        lsusb -v -s <Bus:Dev>
+
 - duvida02
 
 ### Arquivos de informação e de dispositivo
