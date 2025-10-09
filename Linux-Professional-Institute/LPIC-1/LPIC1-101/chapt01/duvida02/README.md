@@ -1,4 +1,3 @@
-
 # 📌 O que significa carregar e descarregar módulos do kernel
 
 ## 1. Kernel e módulos
