@@ -59,5 +59,6 @@ Anotacoes das duvidas que eu tirei com o chat conforme a abordagem do assunto.
 ### Arquivos de informação e de dispositivo
 
 - duvida03
+- duvida04
 
 ### Dispositivos de armazenamento
