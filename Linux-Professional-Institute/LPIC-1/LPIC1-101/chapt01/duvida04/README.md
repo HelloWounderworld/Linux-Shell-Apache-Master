@@ -147,3 +147,7 @@ Portanto:
 # 🧱 **Arquitetura geral: “USB Guardian”**
 
 - usb-guardian
+
+# ⚙ **C e Assembly**
+
+- c-assembly
