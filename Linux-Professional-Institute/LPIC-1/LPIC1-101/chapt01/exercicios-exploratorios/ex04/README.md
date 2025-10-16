@@ -99,34 +99,34 @@ Mostra o modelo do processador e, em versões recentes, flags de vulnerabilidade
 
 #### 🧩 Versão aprimorada da tua resposta
 
-> O comando `lsmod`, `lsusb` e `lspci` são úteis para listar módulos, dispositivos e barramentos conectados, mas **não identificam vulnerabilidades de CPU como o Meltdown**.
->
-> Para verificar se o sistema está vulnerável, o kernel Linux mantém arquivos em:
->
-> ```bash
-> /sys/devices/system/cpu/vulnerabilities/
-> ```
->
-> Você pode conferir com:
->
-> ```bash
-> cat /sys/devices/system/cpu/vulnerabilities/*
-> ```
->
-> Cada arquivo indica se o sistema está vulnerável, protegido ou não afetado.
-> Alternativamente, pode-se usar:
->
-> ```bash
-> dmesg | grep meltdown
-> ```
->
-> ou
->
-> ```bash
-> sudo spectre-meltdown-checker
-> ```
->
-> Assim é possível saber, com base na configuração atual do kernel e do hardware, se as mitigações contra Meltdown (e outras vulnerabilidades de CPU) estão ativas.
+O comando `lsmod`, `lsusb` e `lspci` são úteis para listar módulos, dispositivos e barramentos conectados, mas **não identificam vulnerabilidades de CPU como o Meltdown**.
+
+Para verificar se o sistema está vulnerável, o kernel Linux mantém arquivos em:
+
+```bash
+/sys/devices/system/cpu/vulnerabilities/
+```
+
+Você pode conferir com:
+
+```bash
+cat /sys/devices/system/cpu/vulnerabilities/*
+```
+
+Cada arquivo indica se o sistema está vulnerável, protegido ou não afetado.
+Alternativamente, pode-se usar:
+
+```bash
+dmesg | grep meltdown
+```
+
+ou
+
+```bash
+sudo spectre-meltdown-checker
+```
+
+Assim é possível saber, com base na configuração atual do kernel e do hardware, se as mitigações contra Meltdown (e outras vulnerabilidades de CPU) estão ativas.
 
 ---
 
