@@ -4,6 +4,12 @@ Muitos roteadores de rede incluem uma porta USB que permite a conexão de um dis
 
 ## Resposta
 
-### Resposta antiga, mas certa
+### Resposta antiga
+
+sda
 
 ### Resposta aprimorada
+
+Os kernels do Linux modernos identificam os discos rígidos USB como dispositivos SATA, de modo que o arquivo correspondente será /dev/sda, já que não existe nenhum outro dispositivo de bloco convencional no sistema.
+
+- identificacao-device
