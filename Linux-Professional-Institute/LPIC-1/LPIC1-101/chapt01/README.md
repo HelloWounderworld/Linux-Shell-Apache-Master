@@ -62,3 +62,7 @@ Anotacoes das duvidas que eu tirei com o chat conforme a abordagem do assunto.
 - duvida04
 
 ### Dispositivos de armazenamento
+
+# 📢 FeedBack
+
+## 🤷 O que eu fiquei em dúvida e devo revisar:

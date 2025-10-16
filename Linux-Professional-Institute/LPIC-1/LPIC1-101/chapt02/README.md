@@ -9,3 +9,7 @@
 ## Inicialização do sistema
 
 ## Inspeção da inicialização
+
+# 📢 FeedBack
+
+## 🤷 O que eu fiquei em dúvida e devo revisar:
