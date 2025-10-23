@@ -2,6 +2,8 @@
 
 ## Introdução
 
+- duvida01
+
 ## BIOS ou UEFI
 
 ## O bootloader
