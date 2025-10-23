@@ -8,6 +8,8 @@
 
 ## O bootloader
 
+- duvida02
+
 ## Inicialização do sistema
 
 ## Inspeção da inicialização
