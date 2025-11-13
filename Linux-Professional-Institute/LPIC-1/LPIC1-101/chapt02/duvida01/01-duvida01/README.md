@@ -21,7 +21,9 @@ Ele é geralmente fornecido pelo **fabricante** do dispositivo (ex.: Intel, AMD,
 ## 🧠 2. Por que o Linux precisa desses blobs?
 
 Nem todos os dispositivos funcionam apenas com o driver do kernel.
+
 Alguns têm um **microcontrolador interno** (MCU) que precisa de um pequeno software de inicialização — o **firmware**.
+
 Esse firmware não fica gravado de fábrica (ou fica apenas parcialmente); o kernel precisa carregá-lo toda vez que o sistema inicializa ou quando o dispositivo é plugado.
 
 Exemplos típicos:
