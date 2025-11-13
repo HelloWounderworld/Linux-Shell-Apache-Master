@@ -40,6 +40,7 @@ Quando você conecta um dispositivo (ex.: USB), há uma sequência: detecção e
 
    * Muitos dispositivos (Wi-Fi, algumas câmeras, controladoras) **mantêm um bootloader** no próprio hardware e **esperam** que o host envie um binário de firmware via USB (ou via driver/kernel) para que o dispositivo saia de modo “bootstrap” e carregue o firmware completo.
    * O kernel normalmente solicita esse firmware ao espaço do usuário via a API `request_firmware`; os blobs ficam em `/lib/firmware`. O kernel então transmite o blob para o dispositivo.
+      - 01-duvida01
 
 7. **Operação runtime (bidirecional contínua)**
 

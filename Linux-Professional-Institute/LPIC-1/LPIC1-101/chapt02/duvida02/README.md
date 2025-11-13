@@ -30,7 +30,7 @@
 
 ---
 
-## 1) Onde ver a linha de boot atual (o que o kernel recebeu)
+## 1. Onde ver a linha de boot atual (o que o kernel recebeu)
 
 O *valor efetivo* passado ao kernel **neste boot** está em:
 
@@ -42,7 +42,7 @@ Esse é o lugar definitivo para saber quais parâmetros o kernel recebeu nesta i
 
 ---
 
-## 2) Onde os parâmetros estão documentados (lista completa / referência)
+## 2. Onde os parâmetros estão documentados (lista completa / referência)
 
 Os parâmetros do kernel são documentados no tree de documentação do próprio kernel. Em um sistema com os headers/documentação instalada, procure por:
 
@@ -69,7 +69,7 @@ zgrep -i "kernel parameters" /usr/share/doc/* -n 2>/dev/null || true
 
 ---
 
-## 3) Onde fica a configuração padrão usada pelo bootloader (onde editar)
+## 3. Onde fica a configuração padrão usada pelo bootloader (onde editar)
 
 Depende do bootloader:
 
@@ -119,7 +119,7 @@ Depende do bootloader:
 
 ---
 
-## 4) Como ver quais parâmetros um driver/module aceita (parâmetros de módulos)
+## 4. Como ver quais parâmetros um driver/module aceita (parâmetros de módulos)
 
 Parâmetros passados ao kernel na linha `cmdline` são diferentes dos *module parameters* (que você passa para drivers com `modprobe param=valor`).
 Para ver parâmetros de um módulo:
@@ -132,7 +132,7 @@ modinfo nome_do_modulo
 
 ---
 
-## 5) Resumo — onde procurar e comandos úteis
+## 5. Resumo — onde procurar e comandos úteis
 
 * **Valor atual**: `cat /proc/cmdline`
 * **Docs completos (kernel)**: `Documentation/admin-guide/kernel-parameters*` no source tree ou `/usr/share/doc` da distro
@@ -147,7 +147,7 @@ modinfo nome_do_modulo
 
 ---
 
-## 6) Significado rápido das flags que você listou
+## 6. Significado rápido das flags que você listou
 
 Vou dar uma definição curta e prática de cada uma (o comportamento exato pode variar com versão do kernel):
 
@@ -166,7 +166,7 @@ Vou dar uma definição curta e prática de cada uma (o comportamento exato pode
 
 ---
 
-## 7) Exemplo prático — ver, alterar, testar
+## 7. Exemplo prático — ver, alterar, testar
 
 1. Ver cmdline atual:
 
@@ -190,7 +190,7 @@ Vou dar uma definição curta e prática de cada uma (o comportamento exato pode
 
 ---
 
-## 8) Observações / dicas finais
+## 8. Observações / dicas finais
 
 * **`/proc/cmdline`** é sempre a fonte de verdade do que o kernel recebeu.
 * **Leia a documentação do kernel** para a lista completa de parâmetros; há dezenas (mem, video, dma, iommu, numa, isolcpu, nohz, mitigations, etc.).
