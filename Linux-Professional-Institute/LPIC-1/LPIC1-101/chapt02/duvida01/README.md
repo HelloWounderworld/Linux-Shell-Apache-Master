@@ -188,7 +188,7 @@ O roteiro cobre: preparação de terminais, comandos para observar cada etapa (k
 
 ---
 
-## 1) Preparar 2 — 3 terminais (paralelos)
+## 1. Preparar 2 — 3 terminais (paralelos)
 
 Abra 2 ou 3 terminais — vamos usá-los simultaneamente:
 
@@ -228,7 +228,7 @@ Você usará esse terminal para identificar o dispositivo, copiar firmware, unbi
 
 ---
 
-## 2) Plugue o dispositivo (ou simule) e observe
+## 2. Plugue o dispositivo (ou simule) e observe
 
 Conecte o USB (ou ligue a placa). Enquanto conecta, observe **Term1** e **Term2**.
 
@@ -269,7 +269,7 @@ mycam: device initialized
 
 ---
 
-## 3) Identificar o dispositivo (bus/addr / vendor/product)
+## 3. Identificar o dispositivo (bus/addr / vendor/product)
 
 Se `lsusb` estiver disponível, rode:
 
@@ -296,7 +296,7 @@ udevadm info -a -p /sys/bus/usb/devices/1-2
 
 ---
 
-## 4) Procurar o nome do firmware requisitado
+## 4. Procurar o nome do firmware requisitado
 
 No `dmesg` você viu `failed to load mycam_fw.bin` ou mensagem parecida. Anote o nome exato do blob (ex.: `iwlwifi-7265-ucode`, `mycam_fw.bin`).
 
@@ -310,7 +310,7 @@ Se o arquivo NÃO existir, o driver não conseguirá carregar — é por isso qu
 
 ---
 
-## 5) Obter/colocar o firmware blob em `/lib/firmware`
+## 5. Obter/colocar o firmware blob em `/lib/firmware`
 
 Se você tem o arquivo de firmware (baixado do vendor ou obtido de repositório):
 
@@ -324,7 +324,7 @@ Se estiver usando organização por subdiretório, mantenha o mesmo caminho exig
 
 ---
 
-## 6) Retrigger: fazer o driver pedir firmware novamente — opções
+## 6. Retrigger: fazer o driver pedir firmware novamente — opções
 
 ### Opção A — Replug (desconectar e reconectar fisicamente)
 
@@ -368,7 +368,7 @@ Após o bind, observe `dmesg` — o driver deverá novamente chamar `request_fir
 
 ---
 
-## 7) Ver mensagens agora — sucesso esperado
+## 7. Ver mensagens agora — sucesso esperado
 
 Se tudo OK, no **Terminal 1** (`dmesg`) você deverá ver:
 
@@ -384,7 +384,7 @@ No **udevadm monitor** (Term2) verá `add`/`change` events for the device.
 
 ---
 
-## 8) Exemplo prático real: iwlwifi (Intel Wi-Fi) — pattern que você verá
+## 8. Exemplo prático real: iwlwifi (Intel Wi-Fi) — pattern que você verá
 
 If you have an Intel Wi-Fi that needs firmware:
 
@@ -411,7 +411,7 @@ iwlwifi 0000:02:00.0: loaded firmware version 17...
 
 ---
 
-## 9) Se o kernel usa request_firmware in userspace helper (legacy)
+## 9. Se o kernel usa request_firmware in userspace helper (legacy)
 
 Antigo comportamento: kernel solicita userspace helper (`/sbin/hotplug` or `udev`) to fetch firmware. Hoje o kernel reads `/lib/firmware` directly, but if you have a custom helper, you may need to ensure `udev`/`fwupd` can supply it.
 
@@ -425,7 +425,7 @@ fwupdmgr get-updates
 
 ---
 
-## 10) Depuração quando ainda falha — checklist
+## 10. Depuração quando ainda falha — checklist
 
 Se o firmware não carrega mesmo após copiar:
 
@@ -438,7 +438,7 @@ Se o firmware não carrega mesmo após copiar:
 
 ---
 
-## 11) Comandos úteis resumo (cole e use)
+## 11. Comandos úteis resumo (cole e use)
 
 ```bash
 # Monitores
@@ -473,7 +473,7 @@ journalctl -k | grep -i firmware
 
 ---
 
-## 12) Observações finais — entendimento conceitual
+## 12. Observações finais — entendimento conceitual
 
 * **É bidirecional:** dispositivo anuncia (descriptors) → host configura e pode **enviar** firmware blobs → dispositivo executa.
 * **Firmware do dispositivo roda no dispositivo**, não no kernel; o kernel/driver *só* transfere o blob e aplica configurações.
