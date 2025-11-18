@@ -9,7 +9,16 @@ Boa pergunta — e a tua intuição está no caminho certo: **a interação entr
 
 ## Visão de alto nível (resposta curta)
 
-Quando você conecta um dispositivo (ex.: USB), há uma sequência: detecção elétrica → reset/negociação do barramento → **o dispositivo envia descritores** → o host **lê** esses descritores e **atribui um endereço** → o host escolhe um driver → **o driver pode enviar comandos ao dispositivo**, inclusive **carregar firmware** *no próprio dispositivo* se necessário. Portanto **há comunicação em ambas as direções**: o dispositivo informa sua identidade; o host controla, configura e por vezes fornece firmware/firmwares para ele executar.
+Quando você conecta um dispositivo (ex.: USB), há uma sequência:
+
+> detecção elétrica
+> → reset/negociação do barramento
+> → **o dispositivo envia descritores**
+> → o host **lê** esses descritores e **atribui um endereço**
+> → o host escolhe um driver
+> → **o driver pode enviar comandos ao dispositivo**, inclusive **carregar firmware** *no próprio dispositivo* se necessário.
+
+Portanto **há comunicação em ambas as direções**: o dispositivo informa sua identidade; o host controla, configura e por vezes fornece firmware/firmwares para ele executar.
 
 ---
 
