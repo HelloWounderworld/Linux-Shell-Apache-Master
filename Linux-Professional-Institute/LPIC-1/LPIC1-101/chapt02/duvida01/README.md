@@ -187,7 +187,7 @@ fwupdmgr get-devices    # se fwupd estiver disponível
 
 # **Exemplo Prático Guiado**
 
-Se quiser eu faço um **exemplo prático guiado** no teu terminal (passo a passo) que mostra a sequência completa ao plugar um dispositivo USB que requer upload de firmware: `udevadm monitor`, `dmesg -w`, `lsusb -v`, e identificar no `dmesg` a sequência `request_firmware` → `firmware sent` → `device ready`. Quer que eu gere esse roteiro completo.
+Se quiser eu faço um **exemplo prático guiado** no teu terminal (passo a passo) que mostra a sequência completa ao plugar um dispositivo USB que requer upload de firmware: `udevadm monitor`, `dmesg -w`, `lsusb -v`, e identificar no `dmesg` a sequência `request_firmware` → `firmware sent` → `device ready`.
 
 Perfeito — abaixo está um **roteiro prático, passo-a-passo e executável agora** para você **observar no terminal** toda a sequência de detecção → request_firmware → upload do blob → dispositivo pronto, quando um dispositivo (por exemplo Wi-Fi USB ou PCI, câmera) **precisa que o host envie firmware**.
 

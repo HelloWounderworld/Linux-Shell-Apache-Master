@@ -213,7 +213,3 @@ Comandos úteis para diagnóstico:
 * **No Linux**, o **GRUB2** é o padrão — flexível, compatível e extensível.
 
 ---
-
-Se quiser, posso te montar um **mapa visual** mostrando o que acontece byte a byte desde o firmware até o kernel (incluindo MBR, ESP, GRUB, initramfs, systemd), com setas e explicações de cada camada — estilo “raio-X do boot do Linux”.
-
-Quer que eu gere esse esquema pra ti?

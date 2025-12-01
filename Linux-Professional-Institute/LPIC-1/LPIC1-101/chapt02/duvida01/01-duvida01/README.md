@@ -8,6 +8,7 @@ Vamos destrinchar isso em camadas, da forma mais técnica e completa possível, 
 ## 🧩 1. O que é um *blob*
 
 A palavra **“blob”** vem de *Binary Large Object* — ou seja, um **bloco de dados binário** que não é código-fonte legível (não é texto, não é script, não é código C).
+
 No contexto do Linux e do kernel, um **blob** é um **firmware binário proprietário** que precisa ser carregado para que certo hardware funcione corretamente.
 
 👉 Em outras palavras:
